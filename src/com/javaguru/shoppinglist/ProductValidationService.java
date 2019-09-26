@@ -14,7 +14,7 @@ public class ProductValidationService {
             throw new ProductValidationException("Product price should be greater than 0!");
         }
 
-        if (product.getDiscount() == null) {
+        if (product.getDiscount() != null) {
             if (product.getDiscount().compareTo(MAX_DISCOUNT) == 1) {
                 throw new ProductValidationException("Product discount can't be greater than 100!");
             }
