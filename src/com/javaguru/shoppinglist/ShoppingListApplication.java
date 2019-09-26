@@ -43,7 +43,11 @@ class ShoppingListApplication {
                     case 3:
                         return;
                 }
-            } catch (Exception e) {
+            }catch (ProductValidationException productException){
+                System.out.println(productException.getMessage());
+                System.out.println("Please insert valid data!");
+            }
+            catch (Exception e) {
                 System.out.println("Error! Please try again.");
             }
         }
