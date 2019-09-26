@@ -26,10 +26,15 @@ class ShoppingListApplication {
                         Product product = new Product();
                         product.setName(name);
                         product.setPrice(price);
-                        product.setId(productIdSequence);
-                        productRepository.put(productIdSequence, product);
-                        productIdSequence++;
-                        System.out.println("Result: " + product.getId());
+                        if (ProductValidationService.validate(product)){
+                            product.setId(productIdSequence);
+                            productRepository.put(productIdSequence, product);
+                            productIdSequence++;
+                            System.out.println("Result: " + product.getId());
+                        }
+                        else {
+                            return;
+                        }
                     case 2:
                         System.out.println("Enter product id: ");
                         long id = scanner.nextLong();
