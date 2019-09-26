@@ -10,11 +10,12 @@ public class ProductValidationService {
     public void validate(Product product) {
         if (product.getPrice() == null) {
             throw new ProductValidationException("Product should have price!");
-        } else if (product.getPrice().compareTo(BigDecimal.ZERO) == -1) {
+        } else if (product.getPrice().compareTo(BigDecimal.ZERO) != 1) {
             throw new ProductValidationException("Product price should be greater than 0!");
         }
 
-        if (product.getDiscount() != null) {
+        if (product.getDiscount() == null) {
+            System.out.println("Should not be null");
             if (product.getDiscount().compareTo(MAX_DISCOUNT) == 1) {
                 throw new ProductValidationException("Product discount can't be greater than 100!");
             }
