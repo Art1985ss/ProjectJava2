@@ -32,9 +32,6 @@ class ShoppingListApplication {
                             productIdSequence++;
                             System.out.println("Result: " + product.getId());
                         }
-                        else {
-                            return;
-                        }
                     case 2:
                         System.out.println("Enter product id: ");
                         long id = scanner.nextLong();
