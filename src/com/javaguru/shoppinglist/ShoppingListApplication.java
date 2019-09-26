@@ -26,7 +26,8 @@ class ShoppingListApplication {
                         Product product = new Product();
                         product.setName(name);
                         product.setPrice(price);
-                        ProductValidationService.validate(product);
+                        ProductValidationService productValidationService = new ProductValidationService();
+                        productValidationService.validate(product);
                         product.setId(productIdSequence);
                         productRepository.put(productIdSequence, product);
                         productIdSequence++;

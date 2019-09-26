@@ -7,7 +7,7 @@ public class ProductValidationService {
     private static final int MIN_NAME_LENGTH = 3;
     private static final int MAX_NAME_LENGTH = 32;
 
-    public static void validate(Product product) {
+    public void validate(Product product) {
         if (product.getPrice() == null) {
             throw new ProductValidationException("Product should have price!");
         } else if (product.getPrice().compareTo(BigDecimal.ZERO) == -1) {
