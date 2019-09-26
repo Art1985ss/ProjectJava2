@@ -26,25 +26,25 @@ class ShoppingListApplication {
                         Product product = new Product();
                         product.setName(name);
                         product.setPrice(price);
-                        if (ProductValidationService.validate(product)){
-                            product.setId(productIdSequence);
-                            productRepository.put(productIdSequence, product);
-                            productIdSequence++;
-                            System.out.println("Result: " + product.getId());
-                        }
+                        ProductValidationService.validate(product);
+                        product.setId(productIdSequence);
+                        productRepository.put(productIdSequence, product);
+                        productIdSequence++;
+                        System.out.println("Result: " + product.getId());
+                        break;
                     case 2:
                         System.out.println("Enter product id: ");
                         long id = scanner.nextLong();
                         Product findProductResult = productRepository.get(id);
                         System.out.println(findProductResult);
+                        break;
                     case 3:
                         return;
                 }
-            }catch (ProductValidationException productException){
+            } catch (ProductValidationException productException) {
                 System.out.println(productException.getMessage());
                 System.out.println("Please insert valid data!");
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 System.out.println("Error! Please try again.");
             }
         }

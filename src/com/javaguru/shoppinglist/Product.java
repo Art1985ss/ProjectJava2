@@ -7,7 +7,7 @@ public class Product {
     private Long id;
     private String name;
     private BigDecimal price;
-    private Category category;
+    private String category;
     private BigDecimal discount;
     private String description;
 
@@ -36,11 +36,11 @@ public class Product {
         this.price = price;
     }
 
-    public Category getCategory() {
+    public String getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(String category) {
         this.category = category;
     }
 
