@@ -13,7 +13,7 @@ public class ProductDiscountValidation implements ProductValidation {
         if (product.getDiscount() == null) {
             throw new ProductValidationException("Product discount should not be null");
         }
-        if (product.getDiscount().compareTo(MAX_DISCOUNT) == 1) {
+        if (product.getDiscount().compareTo(MAX_DISCOUNT) > 0) {
             throw new ProductValidationException("Product discount can't be greater than 100");
         }
     }

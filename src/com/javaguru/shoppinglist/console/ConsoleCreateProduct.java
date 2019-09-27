@@ -14,7 +14,6 @@ public class ConsoleCreateProduct {
         String category;
         BigDecimal discount;
         String description;
-        Long id = -1L;
         do {
             try {
                 scanner.nextLine();
@@ -34,8 +33,7 @@ public class ConsoleCreateProduct {
                 product.setCategory(category);
                 product.setDiscount(discount);
                 product.setDescription(description);
-                id = productService.createProduct(product);
-                System.out.println("New product id is : " + id);
+                System.out.println("New product id is : " + productService.createProduct(product));
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
