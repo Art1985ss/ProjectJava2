@@ -20,9 +20,7 @@ public class ProductRepository {
         return productMap.get(id);
     }
 
-    @Override
-    public String toString() {
-        return "Products : \n" +
-                productMap.values().stream().map(Objects::toString).collect(Collectors.joining("\n"));
+    public Map<Long, Product> getAll() {
+        return productMap;
     }
 }

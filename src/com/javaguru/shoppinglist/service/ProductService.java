@@ -17,7 +17,8 @@ public class ProductService {
         return productRepository.findById(id);
     }
 
-    public String showProducts() {
-        return productRepository.toString();
+    public void showProducts() {
+        System.out.println("Product list : ");
+        productRepository.getAll().entrySet().forEach(System.out::println);
     }
 }

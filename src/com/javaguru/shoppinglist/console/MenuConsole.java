@@ -26,7 +26,7 @@ public class MenuConsole {
                         System.out.println(productService.findById(scanner.nextLong()));
                         break;
                     case 3:
-                        System.out.println(productService.showProducts());
+                        productService.showProducts();
                         break;
                     case 4:
                         System.out.println("You have ended execution.");
