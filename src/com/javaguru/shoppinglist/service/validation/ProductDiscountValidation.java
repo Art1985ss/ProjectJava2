@@ -10,10 +10,16 @@ public class ProductDiscountValidation implements ProductValidation {
     @Override
     public void validate(Product product) {
         checkNull(product);
-        if (product.getDiscount() == null) {
+        checkDiscountNotNull(product.getDiscount());
+        checkDiscountGreaterThan(product.getDiscount());
+    }
+    private void checkDiscountNotNull(BigDecimal discount){
+        if (discount == null) {
             throw new ProductValidationException("Product discount should not be null");
         }
-        if (product.getDiscount().compareTo(MAX_DISCOUNT) > 0) {
+    }
+    private void checkDiscountGreaterThan(BigDecimal discount){
+        if (discount.compareTo(MAX_DISCOUNT) > 0) {
             throw new ProductValidationException("Product discount can't be greater than 100");
         }
     }
