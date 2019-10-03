@@ -9,11 +9,23 @@ public class ProductNameValidation implements ProductValidation {
     @Override
     public void validate(Product product) {
         checkNull(product);
-        if (product.getName() == null) {
+        checkNameNotNull(product.getName());
+        checkNameMinLength(product.getName());
+        checkNameMaxLength(product.getName());
+    }
+    private void checkNameNotNull(String name){
+        if (name == null) {
             throw new ProductValidationException("Product name should not be null.");
         }
-        if (product.getName().length() < MIN_NAME_LENGTH || product.getName().length() > MAX_NAME_LENGTH) {
-            throw new ProductValidationException("Product name length can't be shorter than 3 and longer than 32 symbols.");
+    }
+    private void checkNameMinLength(String name){
+        if (name.length() < MIN_NAME_LENGTH) {
+            throw new ProductValidationException("Product name length can't be shorter than 3 symbols.");
+        }
+    }
+    private void checkNameMaxLength(String name){
+        if (name.length() > MAX_NAME_LENGTH) {
+            throw new ProductValidationException("Product name length can't be longer than 32 symbols.");
         }
     }
 }
