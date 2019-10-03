@@ -5,11 +5,20 @@ import com.javaguru.shoppinglist.service.ProductService;
 import java.util.Scanner;
 
 public class MenuConsole {
-    private ProductService productService = new ProductService();
+    private ProductService productService;
+    private ConsoleCreateProduct consoleCreateProduct;
+    private Scanner scanner;
+
+    public MenuConsole(ProductService productService,
+                       ConsoleCreateProduct consoleCreateProduct,
+                       Scanner scanner) {
+        this.productService = productService;
+        this.consoleCreateProduct = consoleCreateProduct;
+        this.scanner = scanner;
+    }
 
     public void execute() {
         while (true) {
-            Scanner scanner = new Scanner(System.in);
             try {
                 System.out.println("1. Create product.");
                 System.out.println("2. Find product by id.");
@@ -18,8 +27,7 @@ public class MenuConsole {
                 switch (scanner.nextInt()) {
                     case 1:
                         System.out.println("Product creation :");
-                        ConsoleCreateProduct consoleCreateProduct = new ConsoleCreateProduct();
-                        consoleCreateProduct.createProduct(productService, scanner);
+                        consoleCreateProduct.createProduct();
                         break;
                     case 2:
                         System.out.print("Enter product id you wish to find :");

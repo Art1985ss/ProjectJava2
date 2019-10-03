@@ -7,8 +7,16 @@ import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class ConsoleCreateProduct {
+    private ProductService productService;
+    private Scanner scanner;
 
-    public void createProduct(ProductService productService, Scanner scanner) {
+    public ConsoleCreateProduct(ProductService productService,
+                                Scanner scanner) {
+        this.productService = productService;
+        this.scanner = scanner;
+    }
+
+    public void createProduct() {
         String name;
         BigDecimal price;
         String category;
@@ -40,7 +48,7 @@ public class ConsoleCreateProduct {
             System.out.println("Options : ");
             System.out.println("1. Add another product.");
             System.out.println("2. Exit to main menu.");
-            switch (scanner.nextInt()){
+            switch (scanner.nextInt()) {
                 case 1:
                     break;
                 case 2:
