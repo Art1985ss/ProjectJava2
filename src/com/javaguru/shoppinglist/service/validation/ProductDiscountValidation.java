@@ -13,12 +13,14 @@ public class ProductDiscountValidation implements ProductValidation {
         checkDiscountNotNull(product.getDiscount());
         checkDiscountGreaterThan(product.getDiscount());
     }
-    private void checkDiscountNotNull(BigDecimal discount){
+
+    private void checkDiscountNotNull(BigDecimal discount) {
         if (discount == null) {
             throw new ProductValidationException("Product discount should not be null");
         }
     }
-    private void checkDiscountGreaterThan(BigDecimal discount){
+
+    private void checkDiscountGreaterThan(BigDecimal discount) {
         if (discount.compareTo(MAX_DISCOUNT) > 0) {
             throw new ProductValidationException("Product discount can't be greater than 100");
         }
