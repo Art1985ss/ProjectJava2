@@ -13,17 +13,20 @@ public class ProductNameValidation implements ProductValidation {
         checkNameMinLength(product.getName());
         checkNameMaxLength(product.getName());
     }
-    private void checkNameNotNull(String name){
+
+    private void checkNameNotNull(String name) {
         if (name == null) {
             throw new ProductValidationException("Product name should not be null.");
         }
     }
-    private void checkNameMinLength(String name){
+
+    private void checkNameMinLength(String name) {
         if (name.length() < MIN_NAME_LENGTH) {
             throw new ProductValidationException("Product name length can't be shorter than 3 symbols.");
         }
     }
-    private void checkNameMaxLength(String name){
+
+    private void checkNameMaxLength(String name) {
         if (name.length() > MAX_NAME_LENGTH) {
             throw new ProductValidationException("Product name length can't be longer than 32 symbols.");
         }
