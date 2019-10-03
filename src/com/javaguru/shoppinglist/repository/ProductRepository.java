@@ -2,8 +2,6 @@ package com.javaguru.shoppinglist.repository;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class ProductRepository {
     private Long productID = 0L;

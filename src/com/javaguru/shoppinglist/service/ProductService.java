@@ -5,8 +5,14 @@ import com.javaguru.shoppinglist.repository.ProductRepository;
 import com.javaguru.shoppinglist.service.validation.ProductValidationService;
 
 public class ProductService {
-    private ProductRepository productRepository = new ProductRepository();
-    private ProductValidationService productValidationService = new ProductValidationService();
+    private ProductRepository productRepository;
+    private ProductValidationService productValidationService;
+
+    public ProductService(ProductRepository productRepository,
+                          ProductValidationService productValidationService) {
+        this.productRepository = productRepository;
+        this.productValidationService = productValidationService;
+    }
 
     public Long createProduct(Product product) {
         productValidationService.validate(product);
