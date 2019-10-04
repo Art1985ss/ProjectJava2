@@ -2,6 +2,7 @@ package com.javaguru.shoppinglist.console;
 
 import com.javaguru.shoppinglist.repository.Product;
 import com.javaguru.shoppinglist.service.ProductService;
+import com.javaguru.shoppinglist.service.validation.ProductValidationException;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
@@ -42,7 +43,7 @@ public class ConsoleCreateProduct {
                 product.setDiscount(discount);
                 product.setDescription(description);
                 System.out.println("New product id is : " + productService.createProduct(product));
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
             }
             System.out.println("Options : ");
