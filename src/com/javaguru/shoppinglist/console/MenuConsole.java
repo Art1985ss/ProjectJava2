@@ -2,6 +2,7 @@ package com.javaguru.shoppinglist.console;
 
 import com.javaguru.shoppinglist.service.ProductService;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuConsole {
@@ -42,6 +43,9 @@ public class MenuConsole {
                     default:
                         System.out.println("Please choose valid option. (1 - 4)");
                 }
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter integer to choose valid option!");
+                scanner.nextLine();
             } catch (Exception e) {
                 System.out.println("Error! Please try again!");
             }
