@@ -2,6 +2,7 @@ package com.javaguru.shoppinglist.repository;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ProductRepository {
     private Long productID = 0L;
@@ -20,5 +21,10 @@ public class ProductRepository {
 
     public Map<Long, Product> getAll() {
         return productMap;
+    }
+
+    public Product findByName(String name){
+        final Optional<Product> productOut = productMap.values().stream().filter(product -> product.getName().equals(name)).findAny();
+        return productOut.orElse(null);
     }
 }

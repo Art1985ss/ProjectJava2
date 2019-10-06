@@ -1,6 +1,7 @@
 package com.javaguru.shoppinglist.repository;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Product {
 
@@ -70,5 +71,21 @@ public class Product {
                 ", discount=" + discount +
                 ", description='" + description + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return name.equals(product.name) &&
+                price.equals(product.price) &&
+                category.equals(product.category) &&
+                Objects.equals(discount, product.discount);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price, category, discount);
     }
 }

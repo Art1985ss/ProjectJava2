@@ -15,7 +15,7 @@ class ShoppingListApplication {
     public static void main(String[] args) {
         ProductRepository productRepository = new ProductRepository();
         Set<ProductValidation> productValidationRules = new HashSet<>();
-        productValidationRules.add(new ProductNameValidation());
+        productValidationRules.add(new ProductNameValidation(productRepository));
         productValidationRules.add(new ProductPriceValidation());
         productValidationRules.add(new ProductDiscountValidation());
         ProductValidationService productValidationService = new ProductValidationService(productValidationRules);
