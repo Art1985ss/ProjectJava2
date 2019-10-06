@@ -2,14 +2,24 @@ package com.javaguru.shoppinglist.console;
 
 import com.javaguru.shoppinglist.service.ProductService;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MenuConsole {
-    private ProductService productService = new ProductService();
+    private ProductService productService;
+    private ConsoleCreateProduct consoleCreateProduct;
+    private Scanner scanner;
+
+    public MenuConsole(ProductService productService,
+                       ConsoleCreateProduct consoleCreateProduct,
+                       Scanner scanner) {
+        this.productService = productService;
+        this.consoleCreateProduct = consoleCreateProduct;
+        this.scanner = scanner;
+    }
 
     public void execute() {
         while (true) {
-            Scanner scanner = new Scanner(System.in);
             try {
                 System.out.println("1. Create product.");
                 System.out.println("2. Find product by id.");
@@ -18,8 +28,7 @@ public class MenuConsole {
                 switch (scanner.nextInt()) {
                     case 1:
                         System.out.println("Product creation :");
-                        ConsoleCreateProduct consoleCreateProduct = new ConsoleCreateProduct();
-                        consoleCreateProduct.createProduct(productService, scanner);
+                        consoleCreateProduct.createProduct();
                         break;
                     case 2:
                         System.out.print("Enter product id you wish to find :");
@@ -34,6 +43,9 @@ public class MenuConsole {
                     default:
                         System.out.println("Please choose valid option. (1 - 4)");
                 }
+            } catch (InputMismatchException e) {
+                System.out.println("Please enter integer to choose valid option!");
+                scanner.nextLine();
             } catch (Exception e) {
                 System.out.println("Error! Please try again!");
             }

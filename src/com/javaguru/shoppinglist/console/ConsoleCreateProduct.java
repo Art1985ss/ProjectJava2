@@ -2,13 +2,22 @@ package com.javaguru.shoppinglist.console;
 
 import com.javaguru.shoppinglist.repository.Product;
 import com.javaguru.shoppinglist.service.ProductService;
+import com.javaguru.shoppinglist.service.validation.ProductValidationException;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class ConsoleCreateProduct {
+    private ProductService productService;
+    private Scanner scanner;
 
-    public void createProduct(ProductService productService, Scanner scanner) {
+    public ConsoleCreateProduct(ProductService productService,
+                                Scanner scanner) {
+        this.productService = productService;
+        this.scanner = scanner;
+    }
+
+    public void createProduct() {
         String name;
         BigDecimal price;
         String category;
@@ -34,13 +43,13 @@ public class ConsoleCreateProduct {
                 product.setDiscount(discount);
                 product.setDescription(description);
                 System.out.println("New product id is : " + productService.createProduct(product));
-            } catch (Exception e) {
+            } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
             }
             System.out.println("Options : ");
             System.out.println("1. Add another product.");
             System.out.println("2. Exit to main menu.");
-            switch (scanner.nextInt()){
+            switch (scanner.nextInt()) {
                 case 1:
                     break;
                 case 2:
