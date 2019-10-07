@@ -15,10 +15,14 @@ public class ProductNameValidation implements ProductValidation {
     @Override
     public void validate(Product product) {
         checkNull(product);
-        checkNameNotNull(product.getName());
-        checkNameMinLength(product.getName());
-        checkNameMaxLength(product.getName());
-        checkNameIsUnique(product.getName());
+        nameValidation(product.getName());
+    }
+
+    public void nameValidation(String name) {
+        checkNameNotNull(name);
+        checkNameMinLength(name);
+        checkNameMaxLength(name);
+        checkNameIsUnique(name);
     }
 
     private void checkNameNotNull(String name) {

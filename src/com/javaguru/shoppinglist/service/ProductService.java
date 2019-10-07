@@ -27,4 +27,12 @@ public class ProductService {
         System.out.println("Product list : ");
         productRepository.getAll().entrySet().forEach(System.out::println);
     }
+
+    public Product findByName(String name) {
+        return productRepository.findByName(name);
+    }
+
+    public void checkName(String name) {
+        productValidationService.nameValidation(name);
+    }
 }

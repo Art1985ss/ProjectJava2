@@ -23,7 +23,7 @@ public class ProductRepository {
         return productMap;
     }
 
-    public Product findByName(String name){
+    public Product findByName(String name) {
         final Optional<Product> productOut = productMap.values().stream().filter(product -> product.getName().equals(name)).findAny();
         return productOut.orElse(null);
     }
