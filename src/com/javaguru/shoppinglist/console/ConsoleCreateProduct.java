@@ -28,7 +28,6 @@ public class ConsoleCreateProduct {
                 scanner.nextLine();
                 System.out.println("Enter product name : ");
                 name = scanner.nextLine();
-                productService.checkName(name);
                 System.out.println("Enter product price : ");
                 price = new BigDecimal(scanner.nextLine());
                 System.out.println("Enter category : ");

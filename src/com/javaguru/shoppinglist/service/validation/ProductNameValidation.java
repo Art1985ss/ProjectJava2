@@ -44,7 +44,7 @@ public class ProductNameValidation implements ProductValidation {
     }
 
     private void checkNameIsUnique(String name) {
-        if (productRepository.findByName(name) != null) {
+        if (productRepository.findByName(name).isPresent()) {
             throw new ProductValidationException("Product with such name already exists in the database.");
         }
     }

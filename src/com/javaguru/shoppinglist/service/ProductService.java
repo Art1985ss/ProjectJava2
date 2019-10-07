@@ -2,6 +2,7 @@ package com.javaguru.shoppinglist.service;
 
 import com.javaguru.shoppinglist.repository.Product;
 import com.javaguru.shoppinglist.repository.ProductRepository;
+import com.javaguru.shoppinglist.service.validation.ProductValidationException;
 import com.javaguru.shoppinglist.service.validation.ProductValidationService;
 
 public class ProductService {
@@ -29,10 +30,6 @@ public class ProductService {
     }
 
     public Product findByName(String name) {
-        return productRepository.findByName(name);
-    }
-
-    public void checkName(String name) {
-        productValidationService.nameValidation(name);
+        return productRepository.findByName(name).orElseThrow(() -> new ProductValidationException("Product with name " + name + " not found."));
     }
 }

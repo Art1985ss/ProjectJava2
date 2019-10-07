@@ -12,10 +12,10 @@ class ShoppingListApplication {
 
     public static void main(String[] args) {
         ProductRepository productRepository = new ProductRepository();
-        Map<String, ProductValidation> productValidationRules = new HashMap<>();
-        productValidationRules.put("Name", new ProductNameValidation(productRepository));
-        productValidationRules.put("Price", new ProductPriceValidation());
-        productValidationRules.put("Discount", new ProductDiscountValidation());
+        Set<ProductValidation> productValidationRules = new HashSet<>();
+        productValidationRules.add(new ProductNameValidation(productRepository));
+        productValidationRules.add(new ProductPriceValidation());
+        productValidationRules.add(new ProductDiscountValidation());
         ProductValidationService productValidationService = new ProductValidationService(productValidationRules);
         ProductService productService = new ProductService(productRepository, productValidationService);
 

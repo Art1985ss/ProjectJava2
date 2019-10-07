@@ -24,7 +24,8 @@ public class MenuConsole {
                 System.out.println("1. Create product.");
                 System.out.println("2. Find product by id.");
                 System.out.println("3. Display all products.");
-                System.out.println("4. Exit.");
+                System.out.println("4. Find product by name.");
+                System.out.println("5. Exit.");
                 switch (scanner.nextInt()) {
                     case 1:
                         System.out.println("Product creation :");
@@ -38,14 +39,21 @@ public class MenuConsole {
                         productService.showProducts();
                         break;
                     case 4:
+                        scanner.nextLine();
+                        System.out.println("Please enter product name you want to find :");
+                        System.out.println(productService.findByName(scanner.nextLine()));
+                        break;
+                    case 5:
                         System.out.println("You have ended execution.");
                         return;
                     default:
-                        System.out.println("Please choose valid option. (1 - 4)");
+                        System.out.println("Please choose valid option. (1 - 5)");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Please enter integer to choose valid option!");
                 scanner.nextLine();
+            } catch (RuntimeException e) {
+                System.out.println(e.getMessage());
             } catch (Exception e) {
                 System.out.println("Error! Please try again!");
             }
