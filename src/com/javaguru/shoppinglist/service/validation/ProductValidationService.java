@@ -1,7 +1,6 @@
 package com.javaguru.shoppinglist.service.validation;
 
 import com.javaguru.shoppinglist.repository.Product;
-
 import java.util.Set;
 
 public class ProductValidationService {

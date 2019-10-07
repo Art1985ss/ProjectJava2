@@ -6,16 +6,14 @@ import com.javaguru.shoppinglist.repository.ProductRepository;
 import com.javaguru.shoppinglist.service.ProductService;
 import com.javaguru.shoppinglist.service.validation.*;
 
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 class ShoppingListApplication {
 
     public static void main(String[] args) {
         ProductRepository productRepository = new ProductRepository();
         Set<ProductValidation> productValidationRules = new HashSet<>();
-        productValidationRules.add(new ProductNameValidation());
+        productValidationRules.add(new ProductNameValidation(productRepository));
         productValidationRules.add(new ProductPriceValidation());
         productValidationRules.add(new ProductDiscountValidation());
         ProductValidationService productValidationService = new ProductValidationService(productValidationRules);
