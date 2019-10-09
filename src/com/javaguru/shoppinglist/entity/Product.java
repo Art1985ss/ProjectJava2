@@ -1,4 +1,4 @@
-package com.javaguru.shoppinglist.repository;
+package com.javaguru.shoppinglist.entity;
 
 import java.math.BigDecimal;
 import java.util.Objects;
@@ -59,6 +59,13 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public BigDecimal getTotalPrice(){
+        return price.subtract(this.getSumOfDiscount());
+    }
+    private BigDecimal getSumOfDiscount(){
+        return price.multiply(discount.multiply(new BigDecimal("0.01")));
     }
 
     @Override

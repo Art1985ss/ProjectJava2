@@ -8,13 +8,16 @@ import java.util.Scanner;
 public class MenuConsole {
     private ProductService productService;
     private ConsoleCreateProduct consoleCreateProduct;
+    private ConsoleShoppingCart consoleShoppingCart;
     private Scanner scanner;
 
     public MenuConsole(ProductService productService,
                        ConsoleCreateProduct consoleCreateProduct,
+                       ConsoleShoppingCart consoleShoppingCart,
                        Scanner scanner) {
         this.productService = productService;
         this.consoleCreateProduct = consoleCreateProduct;
+        this.consoleShoppingCart = consoleShoppingCart;
         this.scanner = scanner;
     }
 
@@ -25,7 +28,8 @@ public class MenuConsole {
                 System.out.println("2. Find product by id.");
                 System.out.println("3. Display all products.");
                 System.out.println("4. Find product by name.");
-                System.out.println("5. Exit.");
+                System.out.println("5. Manage shopping carts.");
+                System.out.println("6. Exit.");
                 switch (scanner.nextInt()) {
                     case 1:
                         System.out.println("Product creation :");
@@ -44,10 +48,13 @@ public class MenuConsole {
                         System.out.println(productService.findByName(scanner.nextLine()));
                         break;
                     case 5:
+                        consoleShoppingCart.execute();
+                        break;
+                    case 6:
                         System.out.println("You have ended execution.");
                         return;
                     default:
-                        System.out.println("Please choose valid option. (1 - 5)");
+                        System.out.println("Please choose valid option. (1 - 6)");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Please enter integer to choose valid option!");

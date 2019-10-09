@@ -1,8 +1,7 @@
 package com.javaguru.shoppinglist.console;
 
-import com.javaguru.shoppinglist.repository.Product;
+import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.service.ProductService;
-import com.javaguru.shoppinglist.service.validation.ProductValidationException;
 
 import java.math.BigDecimal;
 import java.util.Scanner;

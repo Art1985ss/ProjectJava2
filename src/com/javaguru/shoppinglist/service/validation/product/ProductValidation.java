@@ -1,6 +1,6 @@
-package com.javaguru.shoppinglist.service.validation;
+package com.javaguru.shoppinglist.service.validation.product;
 
-import com.javaguru.shoppinglist.repository.Product;
+import com.javaguru.shoppinglist.entity.Product;
 
 public interface ProductValidation {
     void validate(Product product);

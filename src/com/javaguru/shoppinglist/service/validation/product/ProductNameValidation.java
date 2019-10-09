@@ -1,6 +1,6 @@
-package com.javaguru.shoppinglist.service.validation;
+package com.javaguru.shoppinglist.service.validation.product;
 
-import com.javaguru.shoppinglist.repository.Product;
+import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.repository.ProductRepository;
 
 public class ProductNameValidation implements ProductValidation {

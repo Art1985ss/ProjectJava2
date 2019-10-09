@@ -1,9 +1,9 @@
 package com.javaguru.shoppinglist.service;
 
-import com.javaguru.shoppinglist.repository.Product;
+import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.repository.ProductRepository;
-import com.javaguru.shoppinglist.service.validation.ProductValidationException;
-import com.javaguru.shoppinglist.service.validation.ProductValidationService;
+import com.javaguru.shoppinglist.service.validation.product.ProductNotFoundException;
+import com.javaguru.shoppinglist.service.validation.product.ProductValidationService;
 
 public class ProductService {
     private ProductRepository productRepository;
@@ -17,11 +17,11 @@ public class ProductService {
 
     public Long createProduct(Product product) {
         productValidationService.validate(product);
-        return productRepository.add(product).getId();
+        return productRepository.add(product).orElseThrow(()-> new ProductNotFoundException("Product was not found.")).getId();
     }
 
     public Product findById(Long id) {
-        return productRepository.findById(id);
+        return productRepository.findById(id).orElseThrow(()-> new ProductNotFoundException("Product with id " + id + " was not found."));
     }
 
     public void showProducts() {
@@ -30,6 +30,6 @@ public class ProductService {
     }
 
     public Product findByName(String name) {
-        return productRepository.findByName(name).orElseThrow(() -> new ProductValidationException("Product with name " + name + " not found."));
+        return productRepository.findByName(name).orElseThrow(() -> new ProductNotFoundException("Product with name " + name + " not found."));
     }
 }
