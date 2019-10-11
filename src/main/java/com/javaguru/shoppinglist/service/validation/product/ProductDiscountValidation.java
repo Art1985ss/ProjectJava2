@@ -25,7 +25,7 @@ public class ProductDiscountValidation implements ProductValidation {
 
     private void checkDiscountGreaterThan(BigDecimal discount) {
         if (discount.compareTo(MAX_DISCOUNT) > 0) {
-            throw new ProductValidationException("Product discount can't be greater than 100");
+            throw new ProductValidationException("Product discount can't be greater than " + MAX_DISCOUNT);
         }
     }
 
@@ -38,7 +38,7 @@ public class ProductDiscountValidation implements ProductValidation {
     private void checkMinPriceForDiscount(Product product) {
         if (product.getPrice().compareTo(MIN_PRICE_FOR_DISCOUNT) < 0 &&
                 product.getDiscount().compareTo(BigDecimal.ZERO) > 0) {
-            throw new ProductValidationException("Product discount should be 0 for products with price lower than 20.");
+            throw new ProductValidationException("Product discount should be 0 for products with price lower than " + MIN_PRICE_FOR_DISCOUNT);
         }
     }
 }

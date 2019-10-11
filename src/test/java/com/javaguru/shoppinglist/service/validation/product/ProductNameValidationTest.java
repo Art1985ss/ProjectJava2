@@ -22,6 +22,8 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProductNameValidationTest {
+    private static final int MIN_NAME_LENGTH = 3;
+    private static final int MAX_NAME_LENGTH = 32;
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
     @Mock
@@ -29,11 +31,12 @@ public class ProductNameValidationTest {
     @InjectMocks
     private ProductNameValidation victim;
     @Captor
-    ArgumentCaptor<Product> captor;
+    ArgumentCaptor<String> captor;
 
     @Before
     public void setUp() {
         victim = new ProductNameValidation(productRepository);
+        captor = ArgumentCaptor.forClass(String.class);
     }
 
     @Test
@@ -61,15 +64,14 @@ public class ProductNameValidationTest {
     public void shouldGetNameExists() {
         expectedException.expect(ProductValidationException.class);
         expectedException.expectMessage("Product with such name already exists in the database.");
-        when(productRepository.findByName("Apple")).thenReturn(Optional.ofNullable(product()));
+        when(productRepository.findByName("Apple")).thenReturn(Optional.of(product()));
         victim.validate(product());
     }
 
     @Test
     public void shouldReturnNameTooShort() {
-        int minNameLength = 3;
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product name length can't be shorter than " + minNameLength + " symbols.");
+        expectedException.expectMessage("Product name length can't be shorter than " + MIN_NAME_LENGTH + " symbols.");
         Product product = product();
         product.setName("Ap");
         victim.validate(product);
@@ -77,9 +79,8 @@ public class ProductNameValidationTest {
 
     @Test
     public void shouldReturnNameTooLong() {
-        int maxNameLength = 32;
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product name length can't be longer than " + maxNameLength + " symbols.");
+        expectedException.expectMessage("Product name length can't be longer than " + MAX_NAME_LENGTH + " symbols.");
         Product product = product();
         product.setName("TooLongNameForThisField and should return exception");
         victim.validate(product);
@@ -87,7 +88,11 @@ public class ProductNameValidationTest {
 
     @Test
     public void shouldPassValidation() {
-        victim.validate(product());
+        Product product = product();
+        when(productRepository.findByName(product.getName())).thenReturn(Optional.empty());
+        victim.validate(product);
+        verify(productRepository).findByName(captor.capture());
+        assertEquals(product.getName(), captor.getValue());
     }
 
     private Product product() {
