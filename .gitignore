@@ -2,6 +2,7 @@
 /build/
 !gradle/wrapper/gradle-wrapper.jar
 /out/
+/target/
 
 ### STS ###
 .apt_generated
@@ -26,3 +27,4 @@ nbdist/
 .nb-gradle/
 
 .DS_Store
+/target/
