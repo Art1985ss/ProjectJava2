@@ -18,13 +18,13 @@ public class ShoppingCartTest {
         victim = new ShoppingCart();
         victim.setName("Test Cart");
         product = product();
-        victim.addProduct(product);
     }
 
     @Test
     public void getProductListTest() {
         List<Product> productList = new ArrayList<>();
         productList.add(product);
+        victim.addProduct(product);
         assertEquals(productList, victim.getProductList());
     }
 
@@ -32,11 +32,12 @@ public class ShoppingCartTest {
     public void addProductTest() {
         Product product1 = product();
         product1.setId(1L);
-        assertEquals(product1, victim.addProduct(product1).get().get(1));
+        assertEquals(product1, victim.addProduct(product1).get().get(0));
     }
 
     @Test
     public void getPriceTotal() {
+        victim.addProduct(product);
         BigDecimal expected = new BigDecimal("95.00");
         BigDecimal actual = victim.getPriceTotal().get();
         assertEquals(expected, actual);
