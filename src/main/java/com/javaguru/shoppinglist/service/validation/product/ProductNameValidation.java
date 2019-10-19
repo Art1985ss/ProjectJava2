@@ -33,13 +33,13 @@ public class ProductNameValidation implements ProductValidation {
 
     private void checkNameMinLength(String name) {
         if (name.length() < MIN_NAME_LENGTH) {
-            throw new ProductValidationException("Product name length can't be shorter than 3 symbols.");
+            throw new ProductValidationException("Product name length can't be shorter than " + MIN_NAME_LENGTH + " symbols.");
         }
     }
 
     private void checkNameMaxLength(String name) {
         if (name.length() > MAX_NAME_LENGTH) {
-            throw new ProductValidationException("Product name length can't be longer than 32 symbols.");
+            throw new ProductValidationException("Product name length can't be longer than " + MAX_NAME_LENGTH + " symbols.");
         }
     }
 
