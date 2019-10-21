@@ -8,33 +8,47 @@ import org.junit.rules.ExpectedException;
 
 import java.math.BigDecimal;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 
 public class ProductPriceValidationTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
     private ProductPriceValidation victim;
+    private Product testProduct;
+    private String exceptionMessage;
 
     @Before
     public void setUp() {
         victim = new ProductPriceValidation();
+        testProduct = product();
     }
 
     @Test
     public void validateTest() {
+        exceptionMessage = "Product price should not be null.";
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product price should not be null.");
-        Product testProduct = product();
+        expectedException.expectMessage(exceptionMessage);
         testProduct.setPrice(null);
         victim.validate(testProduct);
+
+        assertThatThrownBy(() -> victim.validate(testProduct)).
+                isInstanceOf(ProductValidationException.class).
+                hasMessage(exceptionMessage);
     }
 
     @Test
     public void shouldReturnPriceBelowZero() {
+        exceptionMessage = "Product price should be greater than 0.";
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product price should be greater than 0.");
+        expectedException.expectMessage(exceptionMessage);
         Product testProduct = product();
         testProduct.setPrice(new BigDecimal("-10"));
         victim.validate(testProduct);
+
+        assertThatThrownBy(() -> victim.validate(testProduct)).
+                isInstanceOf(ProductValidationException.class).
+                hasMessage(exceptionMessage);
     }
 
     @Test

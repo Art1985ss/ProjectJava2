@@ -16,6 +16,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.math.BigDecimal;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -30,6 +31,8 @@ public class ProductNameValidationTest {
     private ProductRepository productRepository;
     @InjectMocks
     private ProductNameValidation victim;
+    private String exceptionMessage;
+    private Product testProduct;
     @Captor
     ArgumentCaptor<String> captor;
 
@@ -37,62 +40,85 @@ public class ProductNameValidationTest {
     public void setUp() {
         victim = new ProductNameValidation(productRepository);
         captor = ArgumentCaptor.forClass(String.class);
+        testProduct = product();
     }
 
     @Test
     public void checkNullTest() {
+        exceptionMessage = "Product should not be null.";
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product should not be null.");
+        expectedException.expectMessage(exceptionMessage);
         victim.checkNull(null);
+        assertThatThrownBy(() -> victim.validate(null)).
+                isInstanceOf(ProductValidationException.class).
+                hasMessage(exceptionMessage);
     }
 
     @Test
     public void validateTest() {
+        exceptionMessage = "Product should not be null.";
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product should not be null.");
+        expectedException.expectMessage(exceptionMessage);
         victim.validate(null);
+        assertThatThrownBy(() -> victim.validate(null)).
+                isInstanceOf(ProductValidationException.class).
+                hasMessage(exceptionMessage);
     }
 
     @Test
     public void nameValidationTest() {
+        exceptionMessage = "Product name should not be null.";
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product name should not be null.");
+        expectedException.expectMessage(exceptionMessage);
         victim.nameValidation(null);
+        assertThatThrownBy(() -> victim.nameValidation(null)).
+                isInstanceOf(ProductValidationException.class).
+                hasMessage(exceptionMessage);
     }
 
     @Test
     public void shouldGetNameExists() {
+        exceptionMessage = "Product with such name already exists in the database.";
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product with such name already exists in the database.");
-        when(productRepository.findByName("Apple")).thenReturn(Optional.of(product()));
-        victim.validate(product());
+        expectedException.expectMessage(exceptionMessage);
+        when(productRepository.findByName("Apple")).thenReturn(Optional.of(testProduct));
+        victim.validate(testProduct);
+        assertThatThrownBy(() -> victim.validate(testProduct)).
+                isInstanceOf(ProductValidationException.class).
+                hasMessage(exceptionMessage);
     }
 
     @Test
     public void shouldReturnNameTooShort() {
+        exceptionMessage = "Product name length can't be shorter than " + MIN_NAME_LENGTH + " symbols.";
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product name length can't be shorter than " + MIN_NAME_LENGTH + " symbols.");
-        Product product = product();
-        product.setName("Ap");
-        victim.validate(product);
+        expectedException.expectMessage(exceptionMessage);
+        testProduct.setName("Ap");
+        victim.validate(testProduct);
+        assertThatThrownBy(() -> victim.validate(testProduct)).
+                isInstanceOf(ProductValidationException.class).
+                hasMessage(exceptionMessage);
     }
 
     @Test
     public void shouldReturnNameTooLong() {
+        exceptionMessage = "Product name length can't be longer than " + MAX_NAME_LENGTH + " symbols.";
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product name length can't be longer than " + MAX_NAME_LENGTH + " symbols.");
-        Product product = product();
-        product.setName("TooLongNameForThisField and should return exception");
-        victim.validate(product);
+        expectedException.expectMessage(exceptionMessage);
+        testProduct.setName("TooLongNameForThisField and should return exception");
+        victim.validate(testProduct);
+        assertThatThrownBy(() -> victim.validate(testProduct)).
+                isInstanceOf(ProductValidationException.class).
+                hasMessage(exceptionMessage);
     }
 
     @Test
     public void shouldPassValidation() {
-        Product product = product();
-        when(productRepository.findByName(product.getName())).thenReturn(Optional.empty());
-        victim.validate(product);
+        when(productRepository.findByName(testProduct.getName())).thenReturn(Optional.empty());
+        victim.validate(testProduct);
         verify(productRepository).findByName(captor.capture());
-        assertEquals(product.getName(), captor.getValue());
+        assertEquals(testProduct.getName(), captor.getValue());
+        assertThat(captor.getValue()).isEqualTo(testProduct.getName());
     }
 
     private Product product() {

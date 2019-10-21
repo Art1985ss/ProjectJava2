@@ -6,28 +6,28 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.runner.RunWith;
 import org.mockito.*;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
+import static org.assertj.core.api.Assertions.*;
 
+@RunWith(MockitoJUnitRunner.class)
 public class ProductValidationServiceTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
-    @Spy
-    ProductRepository productRepository;
-    @Spy
+    @Mock
     private ProductNameValidation productNameValidation;
-    @Spy
+    @Mock
     private ProductPriceValidation productPriceValidation;
-    @Spy
+    @Mock
     private ProductDiscountValidation productDiscountValidation;
-    @Spy
-    private Set<ProductValidation> validations;
+    @InjectMocks
     private ProductValidationService victim;
     private Product testProduct;
     @Captor
@@ -35,13 +35,9 @@ public class ProductValidationServiceTest {
 
     @Before
     public void setUp() {
-        productRepository = new ProductRepository();
-        validations = new HashSet<>();
-        productNameValidation = new ProductNameValidation(productRepository);
+        Set<ProductValidation> validations = new HashSet<>();
         validations.add(productNameValidation);
-        productPriceValidation = new ProductPriceValidation();
         validations.add(productPriceValidation);
-        productDiscountValidation = new ProductDiscountValidation();
         validations.add(productDiscountValidation);
         victim = new ProductValidationService(validations);
         testProduct = product();
@@ -49,16 +45,20 @@ public class ProductValidationServiceTest {
 
     @Test
     public void validateTest() {
+        String exceptionMessage = "Product should not be null.";
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product should not be null.");
+        expectedException.expectMessage(exceptionMessage);
+        doThrow(new ProductValidationException(exceptionMessage)).when(productNameValidation).validate(null);
         victim.validate(null);
-        verify(validations).forEach(productValidation -> productValidation.validate(captor.capture()));
-        assertNull(captor.getValue());
     }
 
     @Test
     public void shouldPassValidation() {
         victim.validate(testProduct);
+        verify(productNameValidation).validate(captor.capture());
+        verify(productPriceValidation).validate(captor.capture());
+        verify(productDiscountValidation).validate(captor.capture());
+        assertThat(captor.getAllValues()).containsOnly(testProduct);
     }
 
     private Product product() {
