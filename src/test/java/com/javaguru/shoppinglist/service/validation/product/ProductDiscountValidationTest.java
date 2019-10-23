@@ -8,6 +8,8 @@ import org.junit.rules.ExpectedException;
 
 import java.math.BigDecimal;
 
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 public class ProductDiscountValidationTest {
     private static final BigDecimal MAX_DISCOUNT = new BigDecimal("100");
     private static final BigDecimal MIN_PRICE_FOR_DISCOUNT = new BigDecimal("20");
@@ -15,6 +17,7 @@ public class ProductDiscountValidationTest {
     public ExpectedException expectedException = ExpectedException.none();
     private ProductDiscountValidation victim;
     private Product testProduct;
+    private String exceptionMessage;
 
     @Before
     public void setUp() {
@@ -24,35 +27,51 @@ public class ProductDiscountValidationTest {
 
     @Test
     public void validateTest() {
+        exceptionMessage = "Product discount should not be null";
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product discount should not be null");
+        expectedException.expectMessage(exceptionMessage);
         testProduct.setDiscount(null);
         victim.validate(testProduct);
+        assertThatThrownBy(() -> victim.validate(testProduct)).
+                isInstanceOf(ProductValidationException.class).
+                hasMessage(exceptionMessage);
     }
 
     @Test
     public void shouldReturnDiscountTooBig() {
+        exceptionMessage = "Product discount can't be greater than " + MAX_DISCOUNT;
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product discount can't be greater than " + MAX_DISCOUNT);
+        expectedException.expectMessage(exceptionMessage);
         testProduct.setDiscount(new BigDecimal("110"));
         victim.validate(testProduct);
+        assertThatThrownBy(() -> victim.validate(testProduct)).
+                isInstanceOf(ProductValidationException.class).
+                hasMessage(exceptionMessage);
     }
 
     @Test
     public void shouldReturnDiscountBelowZero() {
+        exceptionMessage = "Product discount can't be less then 0";
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product discount can't be less then 0");
+        expectedException.expectMessage(exceptionMessage);
         testProduct.setDiscount(new BigDecimal("-1"));
         victim.validate(testProduct);
+        assertThatThrownBy(() -> victim.validate(testProduct)).
+                isInstanceOf(ProductValidationException.class).
+                hasMessage(exceptionMessage);
     }
 
     @Test
     public void shouldNotBeAbleToSetDiscount() {
+        exceptionMessage = "Product discount should be 0 for products with price lower than " + MIN_PRICE_FOR_DISCOUNT;
         expectedException.expect(ProductValidationException.class);
-        expectedException.expectMessage("Product discount should be 0 for products with price lower than " + MIN_PRICE_FOR_DISCOUNT);
+        expectedException.expectMessage(exceptionMessage);
         testProduct.setPrice(new BigDecimal("5"));
         testProduct.setDiscount(new BigDecimal("2"));
         victim.validate(testProduct);
+        assertThatThrownBy(() -> victim.validate(testProduct)).
+                isInstanceOf(ProductValidationException.class).
+                hasMessage(exceptionMessage);
     }
 
     @Test
