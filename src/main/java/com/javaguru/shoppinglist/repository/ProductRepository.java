@@ -1,12 +1,14 @@
 package com.javaguru.shoppinglist.repository;
 
 import com.javaguru.shoppinglist.entity.Product;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class ProductRepository implements Repository<Product> {
+@Repository
+public class ProductRepository implements RepositoryTemplate<Product> {
     private Long productID = 0L;
     private Map<Long, Product> productMap = new HashMap<>();
 
@@ -15,7 +17,7 @@ public class ProductRepository implements Repository<Product> {
         product.setId(productID);
         productMap.put(productID, product);
         productID++;
-        return Optional.ofNullable(product);
+        return Optional.of(product);
     }
 
     @Override

@@ -2,14 +2,18 @@ package com.javaguru.shoppinglist.console;
 
 import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
 
+@Component
 public class ConsoleCreateProduct {
     private ProductService productService;
     private Scanner scanner;
 
+    @Autowired
     public ConsoleCreateProduct(ProductService productService,
                                 Scanner scanner) {
         this.productService = productService;

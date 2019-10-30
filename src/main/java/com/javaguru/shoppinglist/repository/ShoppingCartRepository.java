@@ -1,12 +1,14 @@
 package com.javaguru.shoppinglist.repository;
 
 import com.javaguru.shoppinglist.entity.ShoppingCart;
+import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class ShoppingCartRepository implements Repository<ShoppingCart>{
+@Repository
+public class ShoppingCartRepository implements RepositoryTemplate<ShoppingCart> {
     private Long id = 0L;
     private Map<Long, ShoppingCart> shoppingCartMap = new HashMap<>();
 
@@ -14,9 +16,9 @@ public class ShoppingCartRepository implements Repository<ShoppingCart>{
     @Override
     public Optional<ShoppingCart> add(ShoppingCart shoppingCart) {
         shoppingCart.setId(id);
-        shoppingCartMap.put(id,shoppingCart);
+        shoppingCartMap.put(id, shoppingCart);
         id++;
-        return Optional.ofNullable(shoppingCart);
+        return Optional.of(shoppingCart);
     }
 
     @Override

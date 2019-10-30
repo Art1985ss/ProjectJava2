@@ -2,12 +2,16 @@ package com.javaguru.shoppinglist.service.validation.product;
 
 import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.repository.ProductRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProductNameValidation implements ProductValidation {
     private static final int MIN_NAME_LENGTH = 3;
     private static final int MAX_NAME_LENGTH = 32;
     private ProductRepository productRepository;
 
+    @Autowired
     public ProductNameValidation(ProductRepository productRepository) {
         this.productRepository = productRepository;
     }

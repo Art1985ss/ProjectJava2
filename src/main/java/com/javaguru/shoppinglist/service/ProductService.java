@@ -4,11 +4,15 @@ import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.repository.ProductRepository;
 import com.javaguru.shoppinglist.service.validation.product.ProductNotFoundException;
 import com.javaguru.shoppinglist.service.validation.product.ProductValidationService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ProductService {
     private ProductRepository productRepository;
     private ProductValidationService productValidationService;
 
+    @Autowired
     public ProductService(ProductRepository productRepository,
                           ProductValidationService productValidationService) {
         this.productRepository = productRepository;
@@ -18,12 +22,12 @@ public class ProductService {
     public Long createProduct(Product product) {
         productValidationService.validate(product);
         return productRepository.add(product)
-                .orElseThrow(()-> new ProductNotFoundException("Product was not found.")).getId();
+                .orElseThrow(() -> new ProductNotFoundException("Product was not found.")).getId();
     }
 
     public Product findById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(()-> new ProductNotFoundException("Product with id " + id + " was not found."));
+                .orElseThrow(() -> new ProductNotFoundException("Product with id " + id + " was not found."));
     }
 
     public void showProducts() {

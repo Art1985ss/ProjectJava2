@@ -1,16 +1,20 @@
 package com.javaguru.shoppinglist.console;
 
 import com.javaguru.shoppinglist.service.ProductService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+@Component
 public class MenuConsole {
     private ProductService productService;
     private ConsoleCreateProduct consoleCreateProduct;
     private ConsoleShoppingCart consoleShoppingCart;
     private Scanner scanner;
 
+    @Autowired
     public MenuConsole(ProductService productService,
                        ConsoleCreateProduct consoleCreateProduct,
                        ConsoleShoppingCart consoleShoppingCart,

@@ -4,13 +4,17 @@ import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.entity.ShoppingCart;
 import com.javaguru.shoppinglist.repository.ShoppingCartRepository;
 import com.javaguru.shoppinglist.service.validation.shoppingcart.ShoppingCartNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Service
 public class ShoppingCartService {
     private ShoppingCartRepository shoppingCartRepository;
 
+    @Autowired
     public ShoppingCartService(ShoppingCartRepository shoppingCartRepository) {
         this.shoppingCartRepository = shoppingCartRepository;
     }
