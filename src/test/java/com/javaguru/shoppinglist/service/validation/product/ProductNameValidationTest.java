@@ -1,7 +1,7 @@
 package com.javaguru.shoppinglist.service.validation.product;
 
 import com.javaguru.shoppinglist.entity.Product;
-import com.javaguru.shoppinglist.repository.ProductRepository;
+import com.javaguru.shoppinglist.repository.RamProductRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class ProductNameValidationTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
     @Mock
-    private ProductRepository productRepository;
+    private RamProductRepository productRepository;
     @InjectMocks
     private ProductNameValidation victim;
     private String exceptionMessage;

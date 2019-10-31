@@ -2,6 +2,7 @@ package com.javaguru.shoppinglist.service.validation.product;
 
 import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.repository.ProductRepository;
+import com.javaguru.shoppinglist.repository.RamProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

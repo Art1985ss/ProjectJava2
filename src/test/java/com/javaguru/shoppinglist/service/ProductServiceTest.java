@@ -1,7 +1,7 @@
 package com.javaguru.shoppinglist.service;
 
 import com.javaguru.shoppinglist.entity.Product;
-import com.javaguru.shoppinglist.repository.ProductRepository;
+import com.javaguru.shoppinglist.repository.RamProductRepository;
 import com.javaguru.shoppinglist.service.validation.product.ProductNotFoundException;
 import com.javaguru.shoppinglist.service.validation.product.ProductValidationService;
 import org.junit.Before;
@@ -24,7 +24,7 @@ public class ProductServiceTest {
     @Rule
     public ExpectedException expectedException = ExpectedException.none();
     @Mock
-    private ProductRepository productRepository;
+    private RamProductRepository productRepository;
     @Mock
     private ProductValidationService productValidationService;
     @InjectMocks
