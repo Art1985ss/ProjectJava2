@@ -52,4 +52,9 @@ public class ShoppingCartService {
         return shoppingCart.getPriceTotal()
                 .orElseThrow(() -> new RuntimeException("Could not calculate total price for products in this shopping cart."));
     }
+
+    public void saveChanges(ShoppingCart shoppingCart){
+        shoppingCartRepository.update(shoppingCart)
+                .orElseThrow(()-> new ShoppingCartNotFoundException("Shopping cart didn't exist to update."));
+    }
 }

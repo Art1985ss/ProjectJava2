@@ -9,13 +9,13 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class ShoppingCartRepositoryTest {
-    private ShoppingCartRepository victim;
+public class RamShoppingCartRepositoryTest {
+    private RamShoppingCartRepository victim;
     private ShoppingCart testCart;
 
     @Before
     public void setUp() {
-        victim = new ShoppingCartRepository();
+        victim = new RamShoppingCartRepository();
         testCart = shoppingCart();
     }
 

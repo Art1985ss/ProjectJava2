@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan(basePackages = "com.javaguru.shoppinglist")
 @PropertySource("classpath:application.properties")
-public class MySqlConfig {
+public class MySqlAppConfig {
 
     @Value("${jdbc.url}")
     private String jdbcUrl;
