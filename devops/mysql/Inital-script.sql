@@ -1,3 +1,4 @@
+#drop database shoppinglist;
 create database if not exists shoppingList default character set utf8;
 use shoppingList;
 create table if not exists Products(
@@ -23,7 +24,13 @@ Auto_increment = 1;
 create table if not exists productList(
 	shopping_cart_id bigint,
     product_id bigint,
-    created timestamp default current_timestamp
+    created timestamp default current_timestamp,
+    foreign key(shopping_cart_id) 
+		references shopping_carts(id)
+        on delete cascade,
+	foreign key(product_id)
+		references products(id)
+        on delete cascade
 )
 engine = InnoDB;
 
@@ -83,3 +90,10 @@ select * from Products;
 select * from Shopping_carts;
 select * from productList;
 select * from test;
+
+#delete from shopping_carts where name = "Cart1";
+#delete from products where id = 2;
+
+select p.id, p.name, p.price, p.discount, p.category, p.description from products p
+	inner join productList plist on plist.product_id = p.id
+    where plist.shopping_cart_id = 2;
