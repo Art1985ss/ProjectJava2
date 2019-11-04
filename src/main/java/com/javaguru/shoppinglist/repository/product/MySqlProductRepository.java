@@ -1,4 +1,4 @@
-package com.javaguru.shoppinglist.repository;
+package com.javaguru.shoppinglist.repository.product;
 
 import com.javaguru.shoppinglist.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;

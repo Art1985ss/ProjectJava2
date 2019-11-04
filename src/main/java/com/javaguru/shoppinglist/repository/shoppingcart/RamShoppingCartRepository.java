@@ -1,4 +1,4 @@
-package com.javaguru.shoppinglist.repository;
+package com.javaguru.shoppinglist.repository.shoppingcart;
 
 import com.javaguru.shoppinglist.entity.ShoppingCart;
 import org.springframework.context.annotation.Profile;
@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-@Profile({"ram"})
+@Profile({"inMemory"})
 public class RamShoppingCartRepository implements ShoppingCartRepository {
     private Long id = 0L;
     private Map<Long, ShoppingCart> shoppingCartMap = new HashMap<>();

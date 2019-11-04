@@ -2,7 +2,7 @@ package com.javaguru.shoppinglist.service;
 
 import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.entity.ShoppingCart;
-import com.javaguru.shoppinglist.repository.RamShoppingCartRepository;
+import com.javaguru.shoppinglist.repository.shoppingcart.RamShoppingCartRepository;
 import com.javaguru.shoppinglist.service.validation.shoppingcart.ShoppingCartNotFoundException;
 import org.junit.Before;
 import org.junit.Rule;

@@ -1,6 +1,7 @@
-package com.javaguru.shoppinglist.repository;
+package com.javaguru.shoppinglist.repository.shoppingcart;
 
 import com.javaguru.shoppinglist.entity.ShoppingCart;
+import com.javaguru.shoppinglist.repository.RepositoryTemplate;
 
 import java.util.Optional;
 

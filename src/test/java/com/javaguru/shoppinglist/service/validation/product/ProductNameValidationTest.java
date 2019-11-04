@@ -1,7 +1,7 @@
 package com.javaguru.shoppinglist.service.validation.product;
 
 import com.javaguru.shoppinglist.entity.Product;
-import com.javaguru.shoppinglist.repository.RamProductRepository;
+import com.javaguru.shoppinglist.repository.product.RamProductRepository;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;

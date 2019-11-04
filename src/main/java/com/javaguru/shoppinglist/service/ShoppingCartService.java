@@ -2,7 +2,7 @@ package com.javaguru.shoppinglist.service;
 
 import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.entity.ShoppingCart;
-import com.javaguru.shoppinglist.repository.ShoppingCartRepository;
+import com.javaguru.shoppinglist.repository.shoppingcart.ShoppingCartRepository;
 import com.javaguru.shoppinglist.service.validation.shoppingcart.ShoppingCartNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

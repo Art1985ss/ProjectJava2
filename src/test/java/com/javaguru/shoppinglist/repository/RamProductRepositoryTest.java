@@ -1,6 +1,7 @@
 package com.javaguru.shoppinglist.repository;
 
 import com.javaguru.shoppinglist.entity.Product;
+import com.javaguru.shoppinglist.repository.product.RamProductRepository;
 import org.junit.Before;
 import org.junit.Test;
 

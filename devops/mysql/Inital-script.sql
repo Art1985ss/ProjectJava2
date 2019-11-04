@@ -1,38 +1,33 @@
 #drop database shoppinglist;
 create database if not exists shoppingList default character set utf8;
 use shoppingList;
-create table if not exists Products(
-	id bigint primary key auto_increment,
-    name varchar(50) unique not null,
-    category enum("Fruits", "Vegitables", "Electronics", "Toys") not null,
-    price double(10, 3) not null,
-    discount double(10, 3) not null default '0.00',
-    description varchar(100) default "No description",
-    created timestamp default current_timestamp
-)
-engine = InnoDB
-Auto_increment = 1;
+CREATE TABLE IF NOT EXISTS Products (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) UNIQUE NOT NULL,
+    category ENUM('Fruits', 'Vegitables', 'Electronics', 'Toys') NOT NULL,
+    price DOUBLE(10 , 3 ) NOT NULL,
+    discount DOUBLE(10 , 3 ) NOT NULL DEFAULT '0.00',
+    description VARCHAR(100) DEFAULT 'No description',
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)  ENGINE=INNODB AUTO_INCREMENT=1;
 
-create table if not exists Shopping_carts(
-	id bigint primary key auto_increment,
-    name varchar(50) unique not null,
-    created timestamp default current_timestamp
-)
-engine = InnoDB
-Auto_increment = 1;
+CREATE TABLE IF NOT EXISTS Shopping_carts (
+    id BIGINT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(50) UNIQUE NOT NULL,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+)  ENGINE=INNODB AUTO_INCREMENT=1;
 
-create table if not exists productList(
-	shopping_cart_id bigint,
-    product_id bigint,
-    created timestamp default current_timestamp,
-    foreign key(shopping_cart_id) 
-		references shopping_carts(id)
-        on delete cascade,
-	foreign key(product_id)
-		references products(id)
-        on delete cascade
-)
-engine = InnoDB;
+CREATE TABLE IF NOT EXISTS product_list (
+    shopping_cart_id BIGINT,
+    product_id BIGINT,
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (shopping_cart_id)
+        REFERENCES shopping_carts (id)
+        ON DELETE CASCADE,
+    FOREIGN KEY (product_id)
+        REFERENCES products (id)
+        ON DELETE CASCADE
+)  ENGINE=INNODB;
 
 
 Delimiter //
@@ -69,31 +64,53 @@ drop procedure if exists addProductsToCarts;
 create procedure addProductsToCarts() 
 begin
 	declare tableIsEmpty tinyint default 0;
-    set tableIsEmpty = (select if(count(*) = 0, true, false) from productList);
+    set tableIsEmpty = (select if(count(*) = 0, true, false) from product_list);
 	if(tableIsEmpty) then
-		insert into productList (shopping_cart_id, product_id) 
+		insert into product_list (shopping_cart_id, product_id) 
         select cart.id, prod.id from shopping_carts cart, products prod 
         where prod.category = "Fruits";
     end if;
 end
 //
 
-create or replace view test as
-	select cart.name as "Cart name",  prod.name as "Product name" from productList plist 
-    inner join shopping_carts cart on cart.id = plist.shopping_cart_id
-    inner join products prod on prod.id = plist.product_id;
+CREATE OR REPLACE VIEW test AS
+    SELECT 
+        cart.name AS 'Cart name', prod.name AS 'Product name'
+    FROM
+        product_list plist
+            INNER JOIN
+        shopping_carts cart ON cart.id = plist.shopping_cart_id
+            INNER JOIN
+        products prod ON prod.id = plist.product_id;
 
 call fillProducts();
 call fillCarts();
 call addProductsToCarts();
-select * from Products;
-select * from Shopping_carts;
-select * from productList;
-select * from test;
+SELECT 
+    *
+FROM
+    Products;
+SELECT 
+    *
+FROM
+    Shopping_carts;
+SELECT 
+    *
+FROM
+    product_list;
+SELECT 
+    *
+FROM
+    test;
 
 #delete from shopping_carts where name = "Cart1";
 #delete from products where id = 2;
 
-select p.id, p.name, p.price, p.discount, p.category, p.description from products p
-	inner join productList plist on plist.product_id = p.id
-    where plist.shopping_cart_id = 2;
+SELECT 
+    p.id, p.name, p.price, p.discount, p.category, p.description
+FROM
+    products p
+        INNER JOIN
+    product_list plist ON plist.product_id = p.id
+WHERE
+    plist.shopping_cart_id = 2;

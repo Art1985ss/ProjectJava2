@@ -1,4 +1,4 @@
-package com.javaguru.shoppinglist.repository;
+package com.javaguru.shoppinglist.repository.product;
 
 import com.javaguru.shoppinglist.entity.Product;
 import org.springframework.context.annotation.Profile;
@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-@Profile({"ram"})
+@Profile({"inMemory"})
 public class RamProductRepository extends ProductRepository {
     private Long productID = 0L;
     private Map<Long, Product> productMap = new HashMap<>();
