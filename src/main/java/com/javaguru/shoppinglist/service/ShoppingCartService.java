@@ -2,7 +2,7 @@ package com.javaguru.shoppinglist.service;
 
 import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.entity.ShoppingCart;
-import com.javaguru.shoppinglist.repository.ShoppingCartRepository;
+import com.javaguru.shoppinglist.repository.shoppingcart.ShoppingCartRepository;
 import com.javaguru.shoppinglist.service.validation.shoppingcart.ShoppingCartNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,5 +51,10 @@ public class ShoppingCartService {
     public BigDecimal getTotalPriceOfProductsFromShoppingCart(ShoppingCart shoppingCart) {
         return shoppingCart.getPriceTotal()
                 .orElseThrow(() -> new RuntimeException("Could not calculate total price for products in this shopping cart."));
+    }
+
+    public void saveChanges(ShoppingCart shoppingCart){
+        shoppingCartRepository.update(shoppingCart)
+                .orElseThrow(()-> new ShoppingCartNotFoundException("Shopping cart didn't exist to update."));
     }
 }

@@ -1,11 +1,9 @@
 package com.javaguru.shoppinglist.repository;
 
 import com.javaguru.shoppinglist.entity.Product;
+import com.javaguru.shoppinglist.repository.product.RamProductRepository;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Spy;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -13,13 +11,13 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class ProductRepositoryTest {
-    private ProductRepository victim;
+public class RamProductRepositoryTest {
+    private RamProductRepository victim;
     private Product testProduct;
 
     @Before
     public void setUp() {
-        victim = new ProductRepository();
+        victim = new RamProductRepository();
         testProduct = product();
     }
 

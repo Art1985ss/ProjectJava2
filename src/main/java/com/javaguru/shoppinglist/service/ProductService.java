@@ -1,7 +1,7 @@
 package com.javaguru.shoppinglist.service;
 
 import com.javaguru.shoppinglist.entity.Product;
-import com.javaguru.shoppinglist.repository.ProductRepository;
+import com.javaguru.shoppinglist.repository.product.ProductRepository;
 import com.javaguru.shoppinglist.service.validation.product.ProductNotFoundException;
 import com.javaguru.shoppinglist.service.validation.product.ProductValidationService;
 import org.springframework.beans.factory.annotation.Autowired;

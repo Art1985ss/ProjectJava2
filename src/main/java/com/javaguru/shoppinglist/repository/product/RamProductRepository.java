@@ -1,6 +1,7 @@
-package com.javaguru.shoppinglist.repository;
+package com.javaguru.shoppinglist.repository.product;
 
 import com.javaguru.shoppinglist.entity.Product;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -8,7 +9,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public class ProductRepository implements RepositoryTemplate<Product> {
+@Profile({"inMemory"})
+public class RamProductRepository extends ProductRepository {
     private Long productID = 0L;
     private Map<Long, Product> productMap = new HashMap<>();
 
@@ -38,5 +40,10 @@ public class ProductRepository implements RepositoryTemplate<Product> {
     @Override
     public Optional<Product> delete(Long id) {
         return Optional.ofNullable(productMap.remove(id));
+    }
+
+    @Override
+    public boolean existsByName(String name) {
+        return productMap.values().stream().anyMatch(product -> product.getName().equalsIgnoreCase(name));
     }
 }

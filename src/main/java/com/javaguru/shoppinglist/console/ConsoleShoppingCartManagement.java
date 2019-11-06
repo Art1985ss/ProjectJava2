@@ -60,7 +60,8 @@ public class ConsoleShoppingCartManagement {
                 System.out.println("Options : ");
                 System.out.println("1. Add product to your shopping cart.");
                 System.out.println("2. Show total price for your products in shopping cart.");
-                System.out.println("3. Return to shopping cart management menu.");
+                System.out.println("3. Save changes.");
+                System.out.println("4. Return to shopping cart management menu.");
                 switch (scanner.nextInt()) {
                     case 1:
                         this.addProducts(shoppingCart);
@@ -69,9 +70,12 @@ public class ConsoleShoppingCartManagement {
                         this.showTotalProductPrice(shoppingCart);
                         break;
                     case 3:
+                        this.saveChanges(shoppingCart);
+                        break;
+                    case 4:
                         return;
                     default:
-                        System.out.println("Please enter valid integer (1 - 3).");
+                        System.out.println("Please enter valid integer (1 - 4).");
                 }
             } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
@@ -89,6 +93,11 @@ public class ConsoleShoppingCartManagement {
     private void showTotalProductPrice(ShoppingCart shoppingCart) {
         System.out.println("Total price for all products in this shopping cart is : ");
         System.out.println(shoppingCartService.getTotalPriceOfProductsFromShoppingCart(shoppingCart));
+    }
+
+    private void saveChanges(ShoppingCart shoppingCart) {
+        this.shoppingCartService.saveChanges(shoppingCart);
+        System.out.println();
     }
 
 }

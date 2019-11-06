@@ -1,6 +1,7 @@
-package com.javaguru.shoppinglist.repository;
+package com.javaguru.shoppinglist.repository.shoppingcart;
 
 import com.javaguru.shoppinglist.entity.ShoppingCart;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
@@ -8,7 +9,8 @@ import java.util.Map;
 import java.util.Optional;
 
 @Repository
-public class ShoppingCartRepository implements RepositoryTemplate<ShoppingCart> {
+@Profile({"inMemory"})
+public class RamShoppingCartRepository implements ShoppingCartRepository {
     private Long id = 0L;
     private Map<Long, ShoppingCart> shoppingCartMap = new HashMap<>();
 
@@ -39,5 +41,10 @@ public class ShoppingCartRepository implements RepositoryTemplate<ShoppingCart> 
     @Override
     public Optional<ShoppingCart> delete(Long id) {
         return Optional.ofNullable(shoppingCartMap.remove(id));
+    }
+
+    @Override
+    public Optional<ShoppingCart> update(ShoppingCart shoppingCart) {
+        return Optional.of(shoppingCart);
     }
 }

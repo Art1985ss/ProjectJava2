@@ -1,6 +1,7 @@
 package com.javaguru.shoppinglist.repository;
 
 import com.javaguru.shoppinglist.entity.ShoppingCart;
+import com.javaguru.shoppinglist.repository.shoppingcart.RamShoppingCartRepository;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -9,13 +10,13 @@ import java.util.Map;
 
 import static org.junit.Assert.*;
 
-public class ShoppingCartRepositoryTest {
-    private ShoppingCartRepository victim;
+public class RamShoppingCartRepositoryTest {
+    private RamShoppingCartRepository victim;
     private ShoppingCart testCart;
 
     @Before
     public void setUp() {
-        victim = new ShoppingCartRepository();
+        victim = new RamShoppingCartRepository();
         testCart = shoppingCart();
     }
 
