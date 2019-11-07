@@ -18,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
-@Profile({"mysql"})
+@Profile({"mysql", "hibernate"})
 public class MysqlShoppingCartRepository implements ShoppingCartRepository {
     private final JdbcTemplate jdbcTemplate;
 

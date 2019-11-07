@@ -2,10 +2,7 @@ package com.javaguru.shoppinglist.config;
 
 import org.apache.commons.dbcp.BasicDataSource;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -14,6 +11,7 @@ import javax.sql.DataSource;
 @Configuration
 @ComponentScan(basePackages = "com.javaguru.shoppinglist")
 @PropertySource("classpath:application.properties")
+//@Profile({"mysql"})
 public class MySqlAppConfig {
 
     @Value("${jdbc.url}")
@@ -31,7 +29,8 @@ public class MySqlAppConfig {
     }
 
     @Bean
-    public DataSource dataSource(){
+    @Profile({"mysql"})
+    public DataSource dataSource() {
         BasicDataSource dataSource = new BasicDataSource();
         dataSource.setUrl(jdbcUrl);
         dataSource.setDriverClassName(driverClass);
@@ -41,7 +40,8 @@ public class MySqlAppConfig {
     }
 
     @Bean
-    public JdbcTemplate jdbcTemplate(){
+    @Profile({"mysql"})
+    public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
     }
 

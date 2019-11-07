@@ -1,15 +1,26 @@
 package com.javaguru.shoppinglist.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
+@Entity
+@Table(name = "Products")
 public class Product {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "price")
     private BigDecimal price;
+    @Column(name = "category")
     private String category;
+    @Column(name = "discount")
     private BigDecimal discount;
+    @Column(name = "description")
     private String description;
 
 
@@ -61,10 +72,11 @@ public class Product {
         this.description = description;
     }
 
-    public BigDecimal getTotalPrice(){
+    public BigDecimal getTotalPrice() {
         return price.subtract(this.getSumOfDiscount());
     }
-    private BigDecimal getSumOfDiscount(){
+
+    private BigDecimal getSumOfDiscount() {
         return price.multiply(discount.multiply(new BigDecimal("0.01")));
     }
 
