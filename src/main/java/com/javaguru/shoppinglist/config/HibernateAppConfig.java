@@ -68,15 +68,10 @@ public class HibernateAppConfig {
             Properties hibernateProperties
     ) throws Exception {
         LocalSessionFactoryBean localSessionFactoryBean = new LocalSessionFactoryBean();
-        System.out.println("Created");
         localSessionFactoryBean.setDataSource(dataSource);
-        System.out.println("Set data source");
         localSessionFactoryBean.setPackagesToScan(packageToScan);
-        System.out.println("Set package to scan");
         localSessionFactoryBean.setHibernateProperties(hibernateProperties);
-        System.out.println("Set properties");
         localSessionFactoryBean.afterPropertiesSet();
-        System.out.println("After properties");
         return localSessionFactoryBean.getObject();
     }
 
