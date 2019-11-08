@@ -8,6 +8,7 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.sql.DataSource;
 import java.util.Properties;
@@ -15,6 +16,7 @@ import java.util.Properties;
 @Configuration
 @ComponentScan(basePackages = "com.javaguru.shoppinglist")
 @PropertySource("classpath:application.properties")
+//@EnableTransactionManagement
 //@Profile({"hibernate"})
 public class HibernateAppConfig {
 
