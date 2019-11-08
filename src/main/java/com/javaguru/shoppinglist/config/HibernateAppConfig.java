@@ -1,7 +1,5 @@
 package com.javaguru.shoppinglist.config;
 
-import com.javaguru.shoppinglist.repository.product.HibernateProductRepository;
-import com.javaguru.shoppinglist.repository.product.ProductRepository;
 import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,8 +10,6 @@ import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.sql.DataSource;
-import java.io.IOException;
-import java.sql.SQLOutput;
 import java.util.Properties;
 
 @Configuration
@@ -56,10 +52,10 @@ public class HibernateAppConfig {
             @Value("${hibernate.format_sql}") boolean formatSql,
             @Value("${hibernate.hbm2ddl.auto}") String hbm2ddl) {
         Properties properties = new Properties();
-        properties.put("Hibernate.dialect", dialect);
-        properties.put("Hibernate.show_sql", showSql);
-        properties.put("Hibernate.format_sql", formatSql);
-        properties.put("Hibernate.hbm2ddl.auto", hbm2ddl);
+        properties.put("hibernate.dialect", dialect);
+        properties.put("hibernate.show_sql", showSql);
+        properties.put("hibernate.format_sql", formatSql);
+        properties.put("hibernate.hbm2ddl.auto", hbm2ddl);
 
         return properties;
     }

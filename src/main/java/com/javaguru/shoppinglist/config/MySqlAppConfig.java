@@ -40,7 +40,7 @@ public class MySqlAppConfig {
     }
 
     @Bean
-    @Profile({"mysql"})
+    @Profile({"mysql","hibernate"})
     public JdbcTemplate jdbcTemplate() {
         return new JdbcTemplate(dataSource());
     }

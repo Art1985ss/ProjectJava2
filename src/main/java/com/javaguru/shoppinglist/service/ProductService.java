@@ -6,6 +6,7 @@ import com.javaguru.shoppinglist.service.validation.product.ProductNotFoundExcep
 import com.javaguru.shoppinglist.service.validation.product.ProductValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductService {
@@ -19,6 +20,7 @@ public class ProductService {
         this.productValidationService = productValidationService;
     }
 
+    @Transactional
     public Long createProduct(Product product) {
         productValidationService.validate(product);
         return productRepository.add(product)

@@ -5,12 +5,12 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
-@Table(name = "Products")
+@Table(name = "products")
 public class Product {
 
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name")
     private String name;
@@ -18,7 +18,7 @@ public class Product {
     private BigDecimal price;
     @Column(name = "category")
     private String category;
-    @Column(name = "discount")
+    @Column(name = "discount", precision = 10, scale = 3)
     private BigDecimal discount;
     @Column(name = "description")
     private String description;
