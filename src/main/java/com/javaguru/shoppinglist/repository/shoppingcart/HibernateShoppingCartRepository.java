@@ -1,6 +1,5 @@
 package com.javaguru.shoppinglist.repository.shoppingcart;
 
-import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.entity.ShoppingCart;
 import com.javaguru.shoppinglist.service.validation.shoppingcart.ShoppingCartNotFoundException;
 import org.hibernate.SessionFactory;
@@ -48,8 +47,8 @@ public class HibernateShoppingCartRepository implements ShoppingCartRepository {
 
     @Override
     public Map<Long, ShoppingCart> getAll() {
-        List<ShoppingCart> products = sessionFactory.openSession().createCriteria(ShoppingCart.class).list();
-        return products.stream().collect(Collectors.toMap(ShoppingCart::getId, product -> product));
+        List<ShoppingCart> shoppingCarts = sessionFactory.openSession().createCriteria(ShoppingCart.class).list();
+        return shoppingCarts.stream().collect(Collectors.toMap(ShoppingCart::getId, shoppingCart -> shoppingCart));
     }
 
     @Override

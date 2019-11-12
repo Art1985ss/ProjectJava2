@@ -55,10 +55,11 @@ public class ConsoleShoppingCart {
                     case 5:
                         System.out.println("Please enter shopping cart id you wish to manage : ");
                         consoleShoppingCartManagement.manageShoppingCart(shoppingCartService.findById(scanner.nextLong()));
+                        break;
                     case 6:
                         return;
                     default:
-                        System.out.println("Please enter valid options (1 - 5).");
+                        System.out.println("Please enter valid options (1 - 6).");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Please enter integer to choose valid option!");
