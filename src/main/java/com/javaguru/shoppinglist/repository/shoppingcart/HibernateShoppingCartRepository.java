@@ -27,40 +27,40 @@ public class HibernateShoppingCartRepository implements ShoppingCartRepository {
 
     @Override
     public Optional<ShoppingCart> add(ShoppingCart shoppingCart) {
-        sessionFactory.openSession().save(shoppingCart);
+        sessionFactory.getCurrentSession().save(shoppingCart);
         return Optional.of(shoppingCart);
     }
 
     @Override
     public Optional<ShoppingCart> findById(Long id) {
-        ShoppingCart shoppingCart = (ShoppingCart) sessionFactory.openSession().
+        ShoppingCart shoppingCart = (ShoppingCart) sessionFactory.getCurrentSession().
                 createCriteria(ShoppingCart.class).add(Restrictions.eq("id", id)).uniqueResult();
         return Optional.ofNullable(shoppingCart);
     }
 
     @Override
     public Optional<ShoppingCart> findByName(String name) {
-        ShoppingCart shoppingCart = (ShoppingCart) sessionFactory.openSession().
+        ShoppingCart shoppingCart = (ShoppingCart) sessionFactory.getCurrentSession().
                 createCriteria(ShoppingCart.class).add(Restrictions.eq("name", name)).uniqueResult();
         return Optional.ofNullable(shoppingCart);
     }
 
     @Override
     public Map<Long, ShoppingCart> getAll() {
-        List<ShoppingCart> shoppingCarts = sessionFactory.openSession().createCriteria(ShoppingCart.class).list();
+        List<ShoppingCart> shoppingCarts = sessionFactory.getCurrentSession().createCriteria(ShoppingCart.class).list();
         return shoppingCarts.stream().collect(Collectors.toMap(ShoppingCart::getId, shoppingCart -> shoppingCart));
     }
 
     @Override
     public Optional<ShoppingCart> delete(Long id) {
         ShoppingCart shoppingCart = this.findById(id).orElseThrow(() -> new ShoppingCartNotFoundException("No such product in the database to delete"));
-        sessionFactory.openSession().delete(shoppingCart);
+        sessionFactory.getCurrentSession().delete(shoppingCart);
         return Optional.ofNullable(shoppingCart);
     }
 
     @Override
     public Optional<ShoppingCart> update(ShoppingCart shoppingCart) {
-        sessionFactory.openSession().saveOrUpdate(shoppingCart);
+        sessionFactory.getCurrentSession().saveOrUpdate(shoppingCart);
         return Optional.of(shoppingCart);
     }
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Repository
 @Profile({"inMemory"})
-public class RamProductRepository extends ProductRepository {
+public class RamProductRepository implements ProductRepository {
     private Long productID = 0L;
     private Map<Long, Product> productMap = new HashMap<>();
 

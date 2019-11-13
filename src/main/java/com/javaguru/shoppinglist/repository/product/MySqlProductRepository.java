@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @Profile({"mysql"})
-public class MySqlProductRepository extends ProductRepository {
+public class MySqlProductRepository implements ProductRepository {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired

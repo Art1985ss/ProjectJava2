@@ -39,20 +39,22 @@ CREATE OR REPLACE VIEW test AS
             INNER JOIN
         shopping_carts cart ON cart.id = plist.shopping_cart_id
             INNER JOIN
-        products prod ON prod.id = plist.product_id;
+        products prod ON prod.id = plist.product_id
+        ORDER BY cart.name;
         
 CREATE OR REPLACE VIEW total_cart_price_view AS
-	SELECT 
-		cart.name AS 'Cart name',
-		SUM(prod.price - (prod.price * (prod.discount * 0.01))) AS 'Total price',
-		COUNT(prod.id) AS 'Products in cart'
-	FROM
-		product_list plist
-			INNER JOIN
-		shopping_carts cart ON plist.shopping_cart_id = cart.id
-			INNER JOIN
-		products prod ON plist.product_id = prod.id
-	GROUP BY plist.shopping_cart_id;
+    SELECT 
+        cart.name AS 'Cart name',
+        ROUND(SUM(prod.price - (prod.price * (prod.discount * 0.01))),2) AS 'Total price',
+        COUNT(prod.id) AS 'Products in cart'
+    FROM
+        product_list plist
+            INNER JOIN
+        shopping_carts cart ON plist.shopping_cart_id = cart.id
+            INNER JOIN
+        products prod ON plist.product_id = prod.id
+    GROUP BY plist.shopping_cart_id
+    ORDER BY cart.name;
         
 COMMIT;
 SET AUTOCOMMIT = 1;

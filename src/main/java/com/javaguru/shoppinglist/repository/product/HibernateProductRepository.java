@@ -2,6 +2,7 @@ package com.javaguru.shoppinglist.repository.product;
 
 import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.service.validation.product.ProductNotFoundException;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +15,10 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Transactional
 @Repository
 @Profile({"hibernate"})
-@Transactional
-public class HibernateProductRepository extends ProductRepository {
+public class HibernateProductRepository implements ProductRepository {
     private SessionFactory sessionFactory;
 
     @Autowired
@@ -27,34 +28,35 @@ public class HibernateProductRepository extends ProductRepository {
 
     @Override
     public Optional<Product> add(Product product) {
-        sessionFactory.openSession().save(product);
+        Session session = sessionFactory.getCurrentSession();
+        session.save(product);
         return Optional.of(product);
     }
 
     @Override
     public Optional<Product> findById(Long id) {
-        Product product = (Product) sessionFactory.openSession().
+        Product product = (Product) sessionFactory.getCurrentSession().
                 createCriteria(Product.class).add(Restrictions.eq("id", id)).uniqueResult();
         return Optional.ofNullable(product);
     }
 
     @Override
     public Optional<Product> findByName(String name) {
-        Product product = (Product) sessionFactory.openSession().
+        Product product = (Product) sessionFactory.getCurrentSession().
                 createCriteria(Product.class).add(Restrictions.eq("name", name)).uniqueResult();
         return Optional.ofNullable(product);
     }
 
     @Override
     public Map<Long, Product> getAll() {
-        List<Product> products = sessionFactory.openSession().createCriteria(Product.class).list();
+        List<Product> products = sessionFactory.getCurrentSession().createCriteria(Product.class).list();
         return products.stream().collect(Collectors.toMap(Product::getId, product -> product));
     }
 
     @Override
     public Optional<Product> delete(Long id) {
         Product product = this.findById(id).orElseThrow(() -> new ProductNotFoundException("No such product in the database to delete"));
-        sessionFactory.openSession().delete(product);
+        sessionFactory.getCurrentSession().delete(product);
         return Optional.ofNullable(product);
     }
 

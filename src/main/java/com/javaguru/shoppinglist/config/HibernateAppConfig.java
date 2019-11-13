@@ -16,7 +16,7 @@ import java.util.Properties;
 @Configuration
 @ComponentScan(basePackages = "com.javaguru.shoppinglist")
 @PropertySource("classpath:application.properties")
-//@EnableTransactionManagement
+@EnableTransactionManagement
 //@Profile({"hibernate"})
 public class HibernateAppConfig {
 
