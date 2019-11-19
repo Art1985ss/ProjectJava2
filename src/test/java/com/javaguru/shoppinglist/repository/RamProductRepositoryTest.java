@@ -23,18 +23,18 @@ public class RamProductRepositoryTest {
 
     @Test
     public void add() {
-        assertEquals(testProduct, victim.add(testProduct).get());
+        assertEquals(testProduct, victim.save(testProduct).get());
     }
 
     @Test
     public void findById() {
-        victim.add(testProduct);
+        victim.save(testProduct);
         assertEquals(testProduct, victim.findById(testProduct.getId()).get());
     }
 
     @Test
     public void findByName() {
-        victim.add(testProduct);
+        victim.save(testProduct);
         assertEquals(testProduct, victim.findByName(testProduct.getName()).get());
     }
 
@@ -42,13 +42,13 @@ public class RamProductRepositoryTest {
     public void getAll() {
         Map<Long, Product> productMap = new HashMap<>();
         productMap.put(0L, testProduct);
-        victim.add(testProduct);
-        assertEquals(productMap, victim.getAll());
+        victim.save(testProduct);
+        assertEquals(productMap, victim.findAll());
     }
 
     @Test
     public void delete() {
-        victim.add(testProduct);
+        victim.save(testProduct);
         assertEquals(testProduct, victim.delete(testProduct.getId()).get());
     }
 

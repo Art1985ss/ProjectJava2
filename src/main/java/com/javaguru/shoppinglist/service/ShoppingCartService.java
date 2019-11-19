@@ -20,7 +20,7 @@ public class ShoppingCartService {
     }
 
     public Long createShoppingCart(ShoppingCart shoppingCart) {
-        return shoppingCartRepository.add(shoppingCart)
+        return shoppingCartRepository.save(shoppingCart)
                 .orElseThrow(() -> new ShoppingCartNotFoundException("Shopping cart was not found in database.")).getId();
     }
 

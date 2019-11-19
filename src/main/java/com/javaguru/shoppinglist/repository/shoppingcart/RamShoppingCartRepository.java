@@ -4,9 +4,7 @@ import com.javaguru.shoppinglist.entity.ShoppingCart;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 @Profile({"inMemory"})
@@ -16,7 +14,7 @@ public class RamShoppingCartRepository implements ShoppingCartRepository {
 
 
     @Override
-    public Optional<ShoppingCart> add(ShoppingCart shoppingCart) {
+    public Optional<ShoppingCart> save(ShoppingCart shoppingCart) {
         shoppingCart.setId(id);
         shoppingCartMap.put(id, shoppingCart);
         id++;
@@ -34,8 +32,8 @@ public class RamShoppingCartRepository implements ShoppingCartRepository {
     }
 
     @Override
-    public Map<Long, ShoppingCart> getAll() {
-        return shoppingCartMap;
+    public Optional<List<ShoppingCart>> findAll() {
+        return Optional.of(new ArrayList<>(shoppingCartMap.values()));
     }
 
     @Override

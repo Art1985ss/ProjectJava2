@@ -43,13 +43,13 @@ public class ShoppingCartServiceTest {
     public void createShoppingCartShouldThrowException() {
         expectedException.expect(ShoppingCartNotFoundException.class);
         expectedException.expectMessage("Shopping cart was not found in database.");
-        when(shoppingCartRepository.add(testShoppingCart)).thenReturn(Optional.empty());
+        when(shoppingCartRepository.save(testShoppingCart)).thenReturn(Optional.empty());
         victim.createShoppingCart(shoppingCart());
     }
 
     @Test
     public void createShoppingCartShouldReturnCartId() {
-        when(shoppingCartRepository.add(testShoppingCart)).thenReturn(Optional.ofNullable(testShoppingCart));
+        when(shoppingCartRepository.save(testShoppingCart)).thenReturn(Optional.ofNullable(testShoppingCart));
         Long id = victim.createShoppingCart(testShoppingCart);
         assertEquals(testShoppingCart.getId(), id);
     }

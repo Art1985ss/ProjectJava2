@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Repository
 @Profile({"mysql"})
-public class MySqlProductRepository extends ProductRepository {
+public class MySqlProductRepository implements ProductRepository {
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
@@ -28,7 +28,7 @@ public class MySqlProductRepository extends ProductRepository {
 
 
     @Override
-    public Optional<Product> add(Product product) {
+    public Optional<Product> save(Product product) {
         String query = "insert into Products (name, category, price, discount, description) value (?, ?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
@@ -66,14 +66,10 @@ public class MySqlProductRepository extends ProductRepository {
     }
 
     @Override
-    public Map<Long, Product> getAll() {
+    public Optional<List<Product>> findAll() {
         String query = "select id, name, price, discount, category, description from products limit 100";
         List<Product> productList = jdbcTemplate.query(query, new BeanPropertyRowMapper<>(Product.class));
-        Map<Long, Product> productMap = productList.stream().collect(Collectors.toMap(Product::getId, product -> product));
-        if (!productMap.isEmpty()) {
-            return productMap;
-        }
-        return null;
+        return Optional.ofNullable(productList);
     }
 
     @Override

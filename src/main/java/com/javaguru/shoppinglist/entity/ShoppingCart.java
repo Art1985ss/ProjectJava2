@@ -1,12 +1,24 @@
 package com.javaguru.shoppinglist.entity;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.*;
 
+@Entity
+@Table(name = "shopping_carts")
 public class ShoppingCart {
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "name")
     private String name;
-    private List<Product> productList = new ArrayList<>();
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "product_list",
+            joinColumns = @JoinColumn(name = "shopping_cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "product_id")
+    )
+    private List<Product> productList;
 
     public Long getId() {
         return id;

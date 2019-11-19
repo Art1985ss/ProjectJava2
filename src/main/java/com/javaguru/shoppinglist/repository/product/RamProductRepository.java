@@ -4,18 +4,17 @@ import com.javaguru.shoppinglist.entity.Product;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Repository
 @Profile({"inMemory"})
-public class RamProductRepository extends ProductRepository {
+public class RamProductRepository implements ProductRepository {
     private Long productID = 0L;
     private Map<Long, Product> productMap = new HashMap<>();
 
     @Override
-    public Optional<Product> add(Product product) {
+    public Optional<Product> save(Product product) {
         product.setId(productID);
         productMap.put(productID, product);
         productID++;
@@ -33,8 +32,8 @@ public class RamProductRepository extends ProductRepository {
     }
 
     @Override
-    public Map<Long, Product> getAll() {
-        return productMap;
+    public Optional<List<Product>> findAll() {
+        return Optional.of(new ArrayList<>(productMap.values()));
     }
 
     @Override

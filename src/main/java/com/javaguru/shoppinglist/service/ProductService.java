@@ -6,6 +6,9 @@ import com.javaguru.shoppinglist.service.validation.product.ProductNotFoundExcep
 import com.javaguru.shoppinglist.service.validation.product.ProductValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 public class ProductService {
@@ -19,9 +22,10 @@ public class ProductService {
         this.productValidationService = productValidationService;
     }
 
+    @Transactional
     public Long createProduct(Product product) {
         productValidationService.validate(product);
-        return productRepository.add(product)
+        return productRepository.save(product)
                 .orElseThrow(() -> new ProductNotFoundException("Product was not found.")).getId();
     }
 
@@ -30,9 +34,8 @@ public class ProductService {
                 .orElseThrow(() -> new ProductNotFoundException("Product with id " + id + " was not found."));
     }
 
-    public void showProducts() {
-        System.out.println("Product list : ");
-        productRepository.getAll().entrySet().forEach(System.out::println);
+    public List<Product> showProducts() {
+        return productRepository.findAll().orElseThrow(() -> new ProductNotFoundException("No products in repository."));
     }
 
     public Product findByName(String name) {
