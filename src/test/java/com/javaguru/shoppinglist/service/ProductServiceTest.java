@@ -43,13 +43,13 @@ public class ProductServiceTest {
     public void createProductShouldThrowException() {
         expectedException.expect(ProductNotFoundException.class);
         expectedException.expectMessage("Product was not found.");
-        when(productRepository.add(testProduct)).thenReturn(Optional.empty());
+        when(productRepository.save(testProduct)).thenReturn(Optional.empty());
         victim.createProduct(product());
     }
 
     @Test
     public void createProductShouldReturnProductId() {
-        when(productRepository.add(testProduct)).thenReturn(Optional.ofNullable(testProduct));
+        when(productRepository.save(testProduct)).thenReturn(Optional.ofNullable(testProduct));
         Long id = victim.createProduct(testProduct);
         verify(productValidationService).validate(productArgumentCaptor.capture());
         assertEquals(testProduct.getId(), id);

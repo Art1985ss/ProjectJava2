@@ -44,7 +44,8 @@ public class MenuConsole {
                         System.out.println(productService.findById(scanner.nextLong()));
                         break;
                     case 3:
-                        productService.showProducts();
+                        System.out.println("Product list :");
+                        productService.showProducts().forEach(System.out::println);
                         break;
                     case 4:
                         scanner.nextLine();

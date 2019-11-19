@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -28,7 +27,7 @@ public class MysqlShoppingCartRepository implements ShoppingCartRepository {
     }
 
     @Override
-    public Optional<ShoppingCart> add(ShoppingCart shoppingCart) {
+    public Optional<ShoppingCart> save(ShoppingCart shoppingCart) {
         String query = "insert into shopping_carts (name) value (?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
@@ -66,13 +65,10 @@ public class MysqlShoppingCartRepository implements ShoppingCartRepository {
     }
 
     @Override
-    public Map<Long, ShoppingCart> getAll() {
+    public Optional<List<ShoppingCart>> findAll() {
         String query = "select id, name from shopping_carts limit 100";
         List<ShoppingCart> shoppingCartList = jdbcTemplate.query(query, new BeanPropertyRowMapper<>(ShoppingCart.class));
-        if (!shoppingCartList.isEmpty()) {
-            return shoppingCartList.stream().collect(Collectors.toMap(ShoppingCart::getId, shoppingCart -> shoppingCart));
-        }
-        return null;
+        return Optional.ofNullable(shoppingCartList);
     }
 
     @Override

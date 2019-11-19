@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -26,7 +25,7 @@ public class HibernateShoppingCartRepository implements ShoppingCartRepository {
 
 
     @Override
-    public Optional<ShoppingCart> add(ShoppingCart shoppingCart) {
+    public Optional<ShoppingCart> save(ShoppingCart shoppingCart) {
         sessionFactory.getCurrentSession().save(shoppingCart);
         return Optional.of(shoppingCart);
     }
@@ -46,9 +45,9 @@ public class HibernateShoppingCartRepository implements ShoppingCartRepository {
     }
 
     @Override
-    public Map<Long, ShoppingCart> getAll() {
+    public Optional<List<ShoppingCart>> findAll() {
         List<ShoppingCart> shoppingCarts = sessionFactory.getCurrentSession().createCriteria(ShoppingCart.class).list();
-        return shoppingCarts.stream().collect(Collectors.toMap(ShoppingCart::getId, shoppingCart -> shoppingCart));
+        return Optional.ofNullable(shoppingCarts);
     }
 
     @Override

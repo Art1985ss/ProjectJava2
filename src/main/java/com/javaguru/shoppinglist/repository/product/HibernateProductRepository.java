@@ -11,9 +11,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Transactional
 @Repository
@@ -27,7 +25,7 @@ public class HibernateProductRepository implements ProductRepository {
     }
 
     @Override
-    public Optional<Product> add(Product product) {
+    public Optional<Product> save(Product product) {
         Session session = sessionFactory.getCurrentSession();
         session.save(product);
         return Optional.of(product);
@@ -48,9 +46,8 @@ public class HibernateProductRepository implements ProductRepository {
     }
 
     @Override
-    public Map<Long, Product> getAll() {
-        List<Product> products = sessionFactory.getCurrentSession().createCriteria(Product.class).list();
-        return products.stream().collect(Collectors.toMap(Product::getId, product -> product));
+    public Optional<List<Product>> findAll() {
+        return Optional.ofNullable(sessionFactory.getCurrentSession().createCriteria(Product.class).list());
     }
 
     @Override
