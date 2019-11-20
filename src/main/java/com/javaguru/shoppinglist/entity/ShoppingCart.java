@@ -3,6 +3,7 @@ package com.javaguru.shoppinglist.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "shopping_carts")
@@ -45,6 +46,13 @@ public class ShoppingCart {
         return Optional.ofNullable(productList);
     }
 
+    public Optional<Product> removeProduct(Product product){
+        if (productList.remove(product)){
+            return Optional.of(product);
+        }
+        return Optional.empty();
+    }
+
     public Optional<BigDecimal> getPriceTotal() {
         if (productList.isEmpty()) return Optional.empty();
         BigDecimal totalPrice = productList.stream().map(Product::getTotalPrice).reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -53,11 +61,13 @@ public class ShoppingCart {
 
     @Override
     public String toString() {
-        return "ShoppingCart{" +
+        String text = "ShoppingCart{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
-                ", productSet=" + productList +
-                '}';
+                ", name='" + name + "}\n" +
+                "Products in shopping cart : \n";
+        text += productList.stream().map(product -> product.toString() + "\n").collect(Collectors.joining());
+        text += String.format("Total price : %.2f", this.getPriceTotal().orElse(new BigDecimal("0")));
+        return text;
     }
 
     @Override

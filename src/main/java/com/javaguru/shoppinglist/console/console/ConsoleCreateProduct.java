@@ -1,14 +1,16 @@
-package com.javaguru.shoppinglist.console;
+package com.javaguru.shoppinglist.console.console;
 
 import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
 
 @Component
+@Profile({"console"})
 public class ConsoleCreateProduct {
     private ProductService productService;
     private Scanner scanner;

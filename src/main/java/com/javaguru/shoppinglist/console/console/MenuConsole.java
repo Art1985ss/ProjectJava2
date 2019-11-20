@@ -1,13 +1,15 @@
-package com.javaguru.shoppinglist.console;
+package com.javaguru.shoppinglist.console.console;
 
 import com.javaguru.shoppinglist.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 @Component
+@Profile({"console"})
 public class MenuConsole {
     private ProductService productService;
     private ConsoleCreateProduct consoleCreateProduct;
@@ -45,7 +47,7 @@ public class MenuConsole {
                         break;
                     case 3:
                         System.out.println("Product list :");
-                        productService.showProducts().forEach(System.out::println);
+                        productService.getAllProducts().forEach(System.out::println);
                         break;
                     case 4:
                         scanner.nextLine();
