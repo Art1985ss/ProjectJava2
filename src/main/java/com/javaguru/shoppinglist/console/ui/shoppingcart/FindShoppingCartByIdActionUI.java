@@ -6,7 +6,6 @@ import com.javaguru.shoppinglist.service.ShoppingCartService;
 
 import javax.swing.*;
 import java.awt.*;
-import java.math.BigDecimal;
 
 public class FindShoppingCartByIdActionUI extends JFrame implements ActionUI {
     private static final String ACTION_NAME = "Find shopping cart by id";

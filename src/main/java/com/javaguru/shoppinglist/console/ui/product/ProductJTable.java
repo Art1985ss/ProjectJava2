@@ -4,12 +4,9 @@ import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.service.ProductService;
 
 import javax.swing.*;
-import javax.swing.table.AbstractTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.math.BigDecimal;
-import java.util.List;
 
 public class ProductJTable extends JTable {
     private ProductService productService;

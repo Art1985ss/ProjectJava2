@@ -7,9 +7,9 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public class ProductTableModel extends AbstractTableModel {
-    List<Product> productList;
-    String[] columnNames;
-    Class[] columnClasses;
+    private List<Product> productList;
+    private String[] columnNames;
+    private Class[] columnClasses;
 
     public ProductTableModel(List<Product> products) {
         productList = products;

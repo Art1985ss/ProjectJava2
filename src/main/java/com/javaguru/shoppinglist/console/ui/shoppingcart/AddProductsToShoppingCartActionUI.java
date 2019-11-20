@@ -1,13 +1,11 @@
 package com.javaguru.shoppinglist.console.ui.shoppingcart;
 
 import com.javaguru.shoppinglist.console.ui.ActionUI;
-import com.javaguru.shoppinglist.console.ui.product.ProductJTable;
 import com.javaguru.shoppinglist.console.ui.product.ProductTableModel;
 import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.entity.ShoppingCart;
 import com.javaguru.shoppinglist.service.ProductService;
 import com.javaguru.shoppinglist.service.ShoppingCartService;
-import org.hibernate.metamodel.model.convert.spi.JpaAttributeConverter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +16,6 @@ public class AddProductsToShoppingCartActionUI extends JFrame implements ActionU
     private static final String ACTION_NAME = "Manage products in shopping cart";
     private ShoppingCartService shoppingCartService;
     private ProductService productService;
-    private ProductJTable productsInCart;
-    private ProductJTable productList;
     private ShoppingCart shoppingCart;
     private Container container;
 
@@ -164,8 +160,7 @@ public class AddProductsToShoppingCartActionUI extends JFrame implements ActionU
     }
 
     private Product getProduct(ProductTableModel model, int row) {
-        Product product = model.getRow(row);
-        return product;
+        return model.getRow(row);
     }
 
     private JPanel buttonPanel() {

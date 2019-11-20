@@ -3,9 +3,6 @@ package com.javaguru.shoppinglist.console.ui.product;
 import com.javaguru.shoppinglist.console.ui.ActionUI;
 import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.service.ProductService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Profile;
-import org.springframework.stereotype.Component;
 
 import javax.swing.*;
 import java.awt.*;
