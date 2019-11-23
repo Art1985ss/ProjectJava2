@@ -44,6 +44,11 @@ public class ShoppingCartService {
                 .orElseThrow(() -> new ShoppingCartNotFoundException("Shopping cart product list is empty."));
     }
 
+    public Product removeProductFromShoppingCart(ShoppingCart shoppingCart, Product product){
+        return shoppingCart.removeProduct(product)
+                .orElseThrow(()-> new ShoppingCartNotFoundException("No such product in this shopping cart"));
+    }
+
     public void showAllProductsFromShoppingCart(ShoppingCart shoppingCart) {
         shoppingCart.getProductList().forEach(System.out::println);
     }

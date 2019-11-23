@@ -1,15 +1,17 @@
-package com.javaguru.shoppinglist.console;
+package com.javaguru.shoppinglist.console.console;
 
 import com.javaguru.shoppinglist.entity.ShoppingCart;
 import com.javaguru.shoppinglist.service.ProductService;
 import com.javaguru.shoppinglist.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 @Component
+@Profile({"console"})
 public class ConsoleShoppingCartManagement {
     private Scanner scanner;
     private ShoppingCartService shoppingCartService;
@@ -85,7 +87,7 @@ public class ConsoleShoppingCartManagement {
 
     private void addProducts(ShoppingCart shoppingCart) {
         System.out.println("Products available to add : ");
-        productService.showProducts();
+        productService.getAllProducts();
         System.out.println("Please enter product id you wish to add : ");
         shoppingCartService.addProduct(shoppingCart, productService.findById(scanner.nextLong()));
     }

@@ -34,7 +34,7 @@ public class ProductService {
                 .orElseThrow(() -> new ProductNotFoundException("Product with id " + id + " was not found."));
     }
 
-    public List<Product> showProducts() {
+    public List<Product> getAllProducts() {
         return productRepository.findAll().orElseThrow(() -> new ProductNotFoundException("No products in repository."));
     }
 
