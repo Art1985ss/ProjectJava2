@@ -21,6 +21,10 @@ public class ShoppingCart {
     )
     private List<Product> productList;
 
+    public ShoppingCart(){
+        productList = new ArrayList<>();
+    }
+
     public Long getId() {
         return id;
     }
@@ -46,8 +50,8 @@ public class ShoppingCart {
         return Optional.ofNullable(productList);
     }
 
-    public Optional<Product> removeProduct(Product product){
-        if (productList.remove(product)){
+    public Optional<Product> removeProduct(Product product) {
+        if (productList.remove(product)) {
             return Optional.of(product);
         }
         return Optional.empty();
@@ -64,9 +68,14 @@ public class ShoppingCart {
         String text = "ShoppingCart{" +
                 "id=" + id +
                 ", name='" + name + "}\n" +
-                "Products in shopping cart : \n";
-        text += productList.stream().map(product -> product.toString() + "\n").collect(Collectors.joining());
-        text += String.format("Total price : %.2f", this.getPriceTotal().orElse(new BigDecimal("0")));
+                "Products in shopping cart : ";
+        if (!productList.isEmpty()) {
+            text += "\n";
+            text += productList.stream().map(product -> product.toString() + "\n").collect(Collectors.joining());
+            text += String.format("Total price : %.2f", this.getPriceTotal().orElse(new BigDecimal("0")));
+        }else{
+            text += "none";
+        }
         return text;
     }
 

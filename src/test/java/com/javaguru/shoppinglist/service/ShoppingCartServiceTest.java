@@ -131,7 +131,7 @@ public class ShoppingCartServiceTest {
 
     @Test
     public void getTotalPriceOfProductsFromShoppingCartShouldReturnTotalPrice() {
-        when(mockShoppingCart.getPriceTotal()).thenReturn(Optional.ofNullable(new BigDecimal("200")));
+        when(mockShoppingCart.getPriceTotal()).thenReturn(Optional.of(new BigDecimal("200")));
         BigDecimal totalPrice = victim.getTotalPriceOfProductsFromShoppingCart(mockShoppingCart);
         assertNotNull(totalPrice);
     }
