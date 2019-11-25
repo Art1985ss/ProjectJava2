@@ -58,7 +58,7 @@ public class ConsoleShoppingCartManagement {
             try {
                 scanner.nextLine();
                 System.out.println("Products currently in this cart : ");
-                shoppingCartService.showAllProductsFromShoppingCart(shoppingCart);
+                shoppingCartService.getAllProductsFromShoppingCart(shoppingCart);
                 System.out.println("Options : ");
                 System.out.println("1. Add product to your shopping cart.");
                 System.out.println("2. Show total price for your products in shopping cart.");

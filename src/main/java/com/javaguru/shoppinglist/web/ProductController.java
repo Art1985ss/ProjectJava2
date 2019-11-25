@@ -1,16 +1,13 @@
 package com.javaguru.shoppinglist.web;
 
+import com.javaguru.shoppinglist.dto.EntityTransformer;
 import com.javaguru.shoppinglist.dto.ProductDTO;
 import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,13 +34,7 @@ public class ProductController {
 
     @RequestMapping(value = "/save", method = RequestMethod.POST)
     public String saveProduct(@ModelAttribute("product") ProductDTO productDTO){
-        Product product = new Product();
-        product.setName(productDTO.getName());
-        product.setCategory(productDTO.getCategory());
-        product.setPrice(productDTO.getPrice());
-        product.setDiscount(productDTO.getDiscount());
-        product.setDescription(productDTO.getDescription());
-        productService.createProduct(product);
+        productService.createProduct(EntityTransformer.transformFromDTO(productDTO));
         return "redirect:/product";
     }
 
@@ -52,14 +43,7 @@ public class ProductController {
         List<Product> products = productService.getAllProducts();
         List<ProductDTO> productDTOS = new ArrayList<>();
         products.forEach(product -> {
-            ProductDTO productDTO = new ProductDTO();
-            productDTO.setId(product.getId());
-            productDTO.setName(product.getName());
-            productDTO.setCategory(product.getCategory());
-            productDTO.setPrice(product.getPrice());
-            productDTO.setDiscount(product.getDiscount());
-            productDTO.setDescription(product.getDescription());
-            productDTOS.add(productDTO);
+            productDTOS.add(EntityTransformer.transformToDTO(product));
         });
         model.addAttribute("products", productDTOS);
         return "products";
@@ -71,23 +55,26 @@ public class ProductController {
         return "redirect:/products";
     }
 
-/*    @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView getStartingPage() {
-        modelAndView = new ModelAndView();
-        modelAndView.setViewName("products");
-        return modelAndView;
+    @RequestMapping("/find_product")
+    public String showFindForm(){
+        return "find_product";
     }
 
-    @RequestMapping("getProductById")
-    public ModelAndView getProductName(@RequestParam("id") Long id) {
-        modelAndView = new ModelAndView();
-        modelAndView.setViewName("products");
+    @RequestMapping(value = "/find_by_id", method = RequestMethod.GET)
+    public String findById(Model model ,@RequestParam("id") Long id){
         Product product = productService.findById(id);
-        modelAndView.addObject("name", product.getName());
-        modelAndView.addObject("category", product.getCategory());
-        modelAndView.addObject("price", product.getPrice());
-        modelAndView.addObject("discount", product.getDiscount());
-        modelAndView.addObject("description", product.getDescription());
-        return modelAndView;
-    }*/
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        productDTOList.add(EntityTransformer.transformToDTO(product));
+        model.addAttribute("products", productDTOList);
+        return "products";
+    }
+
+    @RequestMapping(value = "/find_by_name", method = RequestMethod.GET)
+    public String findByName(Model model, @RequestParam("name") String name){
+        Product product = productService.findByName(name);
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        productDTOList.add(EntityTransformer.transformToDTO(product));
+        model.addAttribute("products", productDTOList);
+        return "products";
+    }
 }

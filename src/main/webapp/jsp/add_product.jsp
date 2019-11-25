@@ -12,9 +12,9 @@
     <title>Add product</title>
 </head>
 <body>
-    <h1>Add product</h1>
+    <h1 align="center">Add product</h1>
     <form:form method="post" action="save">
-        <table>
+        <table align="center">
             <tr>
                 <td></td>
                 <td><form:hidden path="id"/> </td>

@@ -9,6 +9,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,6 +20,7 @@ import java.util.stream.Collectors;
 @Transactional
 public class HibernateShoppingCartRepository implements ShoppingCartRepository {
     private SessionFactory sessionFactory;
+
     @Autowired
     public HibernateShoppingCartRepository(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -47,7 +50,9 @@ public class HibernateShoppingCartRepository implements ShoppingCartRepository {
     @Override
     public Optional<List<ShoppingCart>> findAll() {
         List<ShoppingCart> shoppingCarts = sessionFactory.getCurrentSession().createCriteria(ShoppingCart.class).list();
-        return Optional.ofNullable(shoppingCarts);
+        if (shoppingCarts.isEmpty()) return Optional.empty();
+        shoppingCarts = shoppingCarts.stream().distinct().collect(Collectors.toList());
+        return Optional.of(shoppingCarts);
     }
 
     @Override

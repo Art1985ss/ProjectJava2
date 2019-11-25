@@ -11,7 +11,7 @@
     <title>Shopping list application</title>
 </head>
 <body>
-<a href="product_input">Add product</a>
-<a href="products">Show all products</a>
+    <a href="${pageContext.request.contextPath}/product_menu">Products menu</a><br>
+    <a href="${pageContext.request.contextPath}/shopping_cart_menu">Shopping carts menu</a>
 </body>
 </html>
