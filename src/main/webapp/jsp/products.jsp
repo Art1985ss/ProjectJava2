@@ -35,7 +35,7 @@
         </c:forEach>
     </table>
 
-    <form action="${pageContext.request.contextPath}/product" method="get">
+    <form action="${pageContext.request.contextPath}/product" method="delete">
         <input type="submit" value="Return to product menu">
     </form>
 </body>

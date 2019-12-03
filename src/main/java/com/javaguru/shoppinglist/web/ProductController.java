@@ -5,14 +5,16 @@ import com.javaguru.shoppinglist.dto.ProductDTO;
 import com.javaguru.shoppinglist.entity.Product;
 import com.javaguru.shoppinglist.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Controller
+@RestController
+@RequestMapping("/products")
 public class ProductController {
     private ProductService productService;
 
@@ -21,60 +23,36 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @RequestMapping("/product")
-    public String showProductMenu(){
-        return "product";
+    @GetMapping
+    public ResponseEntity<List<ProductDTO>> getAllProducts() {
+        List<ProductDTO> productDTOList = new ArrayList<>();
+        productDTOList = productService.getAllProducts().stream()
+                .map(EntityTransformer::transformToDTO).collect(Collectors.toList());
+        return ResponseEntity.ok(productDTOList);
     }
 
-    @RequestMapping("/add_product")
-    public String showAddProductForm(Model model) {
-        model.addAttribute("command", new ProductDTO());
-        return "add_product";
+    @PostMapping
+    public ResponseEntity<Product> createProduct(@RequestBody ProductDTO productDTO) {
+        Product product = EntityTransformer.transformFromDTO(productDTO);
+        productService.createProduct(product);
+        return new ResponseEntity<>(product, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/save", method = RequestMethod.POST)
-    public String saveProduct(@ModelAttribute("product") ProductDTO productDTO){
-        productService.createProduct(EntityTransformer.transformFromDTO(productDTO));
-        return "redirect:/product";
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
+        ProductDTO productDTO = EntityTransformer.transformToDTO(productService.findById(id));
+        return new ResponseEntity<>(productDTO, HttpStatus.FOUND);
     }
 
-    @RequestMapping("/products")
-    public String showAllProducts(Model model) {
-        List<Product> products = productService.getAllProducts();
-        List<ProductDTO> productDTOS = new ArrayList<>();
-        products.forEach(product -> {
-            productDTOS.add(EntityTransformer.transformToDTO(product));
-        });
-        model.addAttribute("products", productDTOS);
-        return "products";
+    @GetMapping("/")
+    public ResponseEntity<ProductDTO> findByName(@RequestParam String name) {
+        ProductDTO productDTO = EntityTransformer.transformToDTO(productService.findByName(name));
+        return new ResponseEntity<>(productDTO, HttpStatus.FOUND);
     }
 
-    @RequestMapping(value = "delete_product/{id}", method = RequestMethod.GET)
-    public String deleteProduct(@PathVariable Long id){
+    @DeleteMapping("/{id}")
+    public ResponseEntity<HttpStatus> deleteById(@PathVariable Long id) {
         productService.deleteProductById(id);
-        return "redirect:/products";
-    }
-
-    @RequestMapping("/find_product")
-    public String showFindForm(){
-        return "find_product";
-    }
-
-    @RequestMapping(value = "/find_by_id", method = RequestMethod.GET)
-    public String findById(Model model ,@RequestParam("id") Long id){
-        Product product = productService.findById(id);
-        List<ProductDTO> productDTOList = new ArrayList<>();
-        productDTOList.add(EntityTransformer.transformToDTO(product));
-        model.addAttribute("products", productDTOList);
-        return "products";
-    }
-
-    @RequestMapping(value = "/find_by_name", method = RequestMethod.GET)
-    public String findByName(Model model, @RequestParam("name") String name){
-        Product product = productService.findByName(name);
-        List<ProductDTO> productDTOList = new ArrayList<>();
-        productDTOList.add(EntityTransformer.transformToDTO(product));
-        model.addAttribute("products", productDTOList);
-        return "products";
+        return ResponseEntity.ok(HttpStatus.NO_CONTENT);
     }
 }
