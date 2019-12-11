@@ -42,4 +42,9 @@ public class ProductService {
         return productRepository
                 .findByName(name).orElseThrow(() -> new ProductNotFoundException("Product with name " + name + " not found."));
     }
+
+    public Product deleteProductById(Long id){
+        return productRepository.delete(id)
+                .orElseThrow(() -> new ProductNotFoundException("No such product to delete."));
+    }
 }

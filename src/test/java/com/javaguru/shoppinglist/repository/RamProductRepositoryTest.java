@@ -6,7 +6,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -40,10 +42,10 @@ public class RamProductRepositoryTest {
 
     @Test
     public void getAll() {
-        Map<Long, Product> productMap = new HashMap<>();
-        productMap.put(0L, testProduct);
+        List<Product> productList = new ArrayList<>();
+        productList.add(testProduct);
         victim.save(testProduct);
-        assertEquals(productMap, victim.findAll());
+        assertEquals(productList, victim.findAll().get());
     }
 
     @Test

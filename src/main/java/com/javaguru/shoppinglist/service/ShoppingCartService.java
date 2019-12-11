@@ -39,6 +39,11 @@ public class ShoppingCartService {
                 .orElseThrow(() -> new ShoppingCartNotFoundException("Shopping cart didn't exist to delete."));
     }
 
+    public List<ShoppingCart> getAll(){
+        return shoppingCartRepository.findAll()
+                .orElseThrow(()-> new ShoppingCartNotFoundException("Could not locate any shopping cart"));
+    }
+
     public List<Product> addProduct(ShoppingCart shoppingCart, Product product) {
         return shoppingCart.addProduct(product)
                 .orElseThrow(() -> new ShoppingCartNotFoundException("Shopping cart product list is empty."));
@@ -49,7 +54,7 @@ public class ShoppingCartService {
                 .orElseThrow(()-> new ShoppingCartNotFoundException("No such product in this shopping cart"));
     }
 
-    public void showAllProductsFromShoppingCart(ShoppingCart shoppingCart) {
+    public void getAllProductsFromShoppingCart(ShoppingCart shoppingCart) {
         shoppingCart.getProductList().forEach(System.out::println);
     }
 

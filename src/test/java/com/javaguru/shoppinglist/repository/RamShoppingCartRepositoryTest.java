@@ -5,8 +5,8 @@ import com.javaguru.shoppinglist.repository.shoppingcart.RamShoppingCartReposito
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -39,10 +39,10 @@ public class RamShoppingCartRepositoryTest {
 
     @Test
     public void getAll() {
-        Map<Long, ShoppingCart> productMap = new HashMap<>();
-        productMap.put(0L, testCart);
+        List<ShoppingCart> shoppingCartList = new ArrayList<>();
+        shoppingCartList.add(testCart);
         victim.save(testCart);
-        assertEquals(productMap, victim.findAll());
+        assertEquals(shoppingCartList, victim.findAll().get());
     }
 
     @Test
